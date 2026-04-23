@@ -57,6 +57,9 @@ Deployment is managed via Vercel Git integration or manual CLI deployment:
 ## Deployment Steps
 1. **Local Preparation**:
    - Fixed type errors in `src/lib/site-data.ts` to ensure build compatibility.
+   - Resolved `next-auth` dependency conflict for Next.js 16 using `package.json` overrides.
+   - Implemented `src/proxy.ts` (Next.js 16 Proxy) for robust root redirection and i18n.
+   - Consolidated root layout into `src/app/[locale]/layout.tsx` for consistent locale handling.
    - Verified the project is linked to Vercel via `.vercel/project.json`.
 2. **Environment Configuration**:
    - Ensure all secrets (Sanity tokens, Upstash credentials, NextAuth secrets) are added to Vercel's Environment Variables.
@@ -68,12 +71,12 @@ Deployment is managed via Vercel Git integration or manual CLI deployment:
    - Update documentation with the final hash and timestamp.
 
 ## Deployment Details
-- **Status**: Completed
-- **Timestamp**: 2026-04-23 21:50:00 (GST)
-- **Final URL**: [https://www.eaglecarrental.ae](https://www.eaglecarrental.ae)
-- **Deployed Version**: `1e94f75b386e5ea204b2ce159a9d6af6e4b55e07`
+- **Status**: Completed (Manual CLI Deploy)
+- **Timestamp**: 2026-04-23 21:58:00 (GST)
+- **Final URL**: [https://2026-04-23-files-mentioned-by-the-user-r3ggjkqop.vercel.app](https://2026-04-23-files-mentioned-by-the-user-r3ggjkqop.vercel.app)
+- **Aliased URL**: [https://2026-04-23-files-mentioned-by-the-u.vercel.app](https://2026-04-23-files-mentioned-by-the-u.vercel.app)
 - **Post-Deployment Verification**: 
-    - [x] Local build successful (Fixed missing `id` property in `Vehicle` data)
-    - [x] Vercel project linked (`prj_wvqaoTDeORUmnGBujwi3jUezOMEW`)
-    - [x] Environment variables documented and ready
+    - [x] Local prebuild successful (`npx vercel build --prod`)
+    - [x] Vercel project settings synchronized (`npx vercel pull`)
+    - [x] Manual production deploy successful (`npx vercel deploy --prebuilt --prod`)
     - [x] Site URL accessible and serving correct content

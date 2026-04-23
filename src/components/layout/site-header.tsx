@@ -3,9 +3,11 @@ import type { Locale } from "@/lib/locale";
 import { localize, localeLabels, oppositeLocale } from "@/lib/locale";
 import { navigation, siteConfig } from "@/lib/site-data";
 import { LocaleLink } from "@/components/common/locale-link";
+import { auth } from "@/auth";
 
-export function SiteHeader({ locale }: { locale: Locale }) {
+export async function SiteHeader({ locale }: { locale: Locale }) {
   const alternateLocale = oppositeLocale(locale);
+  const session = await auth();
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/6 bg-[rgba(9,9,10,0.82)] backdrop-blur-xl">
@@ -52,6 +54,17 @@ export function SiteHeader({ locale }: { locale: Locale }) {
           >
             {localeLabels[alternateLocale]}
           </LocaleLink>
+          
+          <LocaleLink
+            locale={locale}
+            href={session?.user ? "/dashboard" : "/login"}
+            className="rounded-full border border-white/10 px-4 py-2 text-sm font-medium text-[var(--text-muted)] transition hover:border-[var(--border-strong)] hover:text-white"
+          >
+            {session?.user 
+              ? (locale === 'ar' ? 'لوحة التحكم' : 'Dashboard') 
+              : (locale === 'ar' ? 'دخول' : 'Login')}
+          </LocaleLink>
+
           <a
             href={`tel:${siteConfig.company.phone}`}
             className="hidden rounded-full bg-[var(--accent)] px-5 py-2 text-sm font-semibold text-black transition hover:bg-[var(--accent-bright)] sm:inline-flex"

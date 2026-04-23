@@ -10,6 +10,7 @@ export type VehicleCategory =
   | "executive";
 
 export interface Vehicle {
+  id: string;
   slug: string;
   image: string;
   name: LocalizedText;
@@ -216,6 +217,7 @@ export const siteConfig = {
 
 export const vehicles: Vehicle[] = [
   {
+    id: "v-corolla-70",
     slug: "toyota-corolla-70",
     image: "/fleet/7188.png",
     name: { ar: "تويوتا كورولا", en: "Toyota Corolla" },
@@ -251,6 +253,7 @@ export const vehicles: Vehicle[] = [
     },
   },
   {
+    id: "v-sportage-red",
     slug: "kia-sportage-red",
     image: "/fleet/9874.png",
     name: { ar: "كيا سبورتاج", en: "Kia Sportage" },

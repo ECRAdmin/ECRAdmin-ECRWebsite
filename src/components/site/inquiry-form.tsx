@@ -130,6 +130,7 @@ export function InquiryForm({
   return (
     <form
       action={handleSubmit}
+      aria-label="Inquiry Form"
       className="gold-ring glass-panel rounded-[2rem] p-6 sm:p-7"
     >
       <div className="mb-6 flex items-center justify-between gap-4">

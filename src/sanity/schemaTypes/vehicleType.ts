@@ -19,5 +19,7 @@ export const vehicleType = {
     { name: "image", title: "Image", type: "image" },
     { name: "summaryAr", title: "Summary (AR)", type: "text" },
     { name: "summaryEn", title: "Summary (EN)", type: "text" },
+    { name: "stock", title: "Total Stock", type: "number", initialValue: 1 },
+    { name: "isAvailable", title: "Is Available", type: "boolean", initialValue: true },
   ],
 };

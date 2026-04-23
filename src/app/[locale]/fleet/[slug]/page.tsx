@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { StructuredData } from "@/components/common/structured-data";
 import { InquiryForm } from "@/components/site/inquiry-form";
+import { BookingForm } from "@/components/site/booking-form";
 import { type Locale, formatCurrency, isLocale, localize } from "@/lib/locale";
 import {
   breadcrumbSchema,
@@ -136,21 +137,47 @@ export default async function VehicleDetailPage({
           </div>
         </div>
       </section>
+      <section className="py-16 sm:py-20 bg-white/5">
+        <div className="shell grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+          <div className="space-y-5">
+            <span className="section-kicker">
+              {typedLocale === "ar" ? "حجز فوري" : "Instant booking"}
+            </span>
+            <h2 className="font-display text-4xl font-semibold text-white">
+              {typedLocale === "ar"
+                ? "احجز عبر الموقع الآن"
+                : "Book online now"}
+            </h2>
+            <p className="text-lg leading-8 text-[var(--text-muted)]">
+              {typedLocale === "ar"
+                ? "وفر الوقت واحجز مركبتك مباشرة. سنقوم بمعالجة طلبك وتأكيد الدفع والتوصيل فورًا."
+                : "Save time and book your vehicle directly. We will process your request and confirm payment and delivery immediately."}
+            </p>
+          </div>
+          <BookingForm 
+            locale={typedLocale} 
+            vehicleId={vehicle.id} 
+            vehicleName={vehicleName}
+            dailyPrice={vehicle.dailyFrom}
+          />
+        </div>
+      </section>
+
       <section className="py-16 sm:py-20">
         <div className="shell grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="space-y-5">
             <span className="section-kicker">
-              {typedLocale === "ar" ? "طلب المركبة" : "Vehicle inquiry"}
+              {typedLocale === "ar" ? "استفسار واتساب" : "WhatsApp inquiry"}
             </span>
             <h2 className="font-display text-4xl font-semibold text-white">
               {typedLocale === "ar"
-                ? "أرسل الطلب وسنؤكد السعر النهائي والتوفر."
-                : "Send your request and we will confirm final pricing and availability."}
+                ? "أو تواصل معنا عبر واتساب"
+                : "Or reach out via WhatsApp"}
             </h2>
             <p className="text-lg leading-8 text-[var(--text-muted)]">
               {typedLocale === "ar"
-                ? "لا ننشر التوافر المباشر أو الشروط الخاصة للعامة. بعد إرسال الطلب، يتواصل الفريق لتأكيد المدة، الموقع، وخيارات التسليم."
-                : "We do not expose live availability or private commercial policies publicly. Once submitted, the team confirms duration, location, and delivery options."}
+                ? "إذا كنت تفضل التحدث مع فريقنا مباشرة أو لديك متطلبات خاصة."
+                : "If you prefer to speak with our team directly or have special requirements."}
             </p>
           </div>
           <InquiryForm locale={typedLocale} defaultVehicle={vehicleName} />

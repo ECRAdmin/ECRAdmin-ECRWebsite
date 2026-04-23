@@ -18,11 +18,22 @@ This document tracks the progress of the implementation based on the original `p
 | **Trust & policy** | ✅ Done | requirements, insurance basics, privacy, terms, partner-program governance | Trust strips, requirement blocks, privacy, and terms pages implemented. |
 | **Analytics** | ✅ Done | GA4/Search Console/Bing, event taxonomy, lead attribution dashboard | GA4 configured (`analytics.tsx`), tracking events added to CTAs and form submissions. |
 | **Launch hardening** | ✅ Done | performance, accessibility, QA, indexation checks, fallback handling | Typechecking and ESLint configured and passing, accessible semantic HTML used. |
-| **Future booking engine** | ⏸️ P2 | live availability, payments, deposits, customer dashboard, CRM sync | Post-launch roadmap item. No work started in V1 as per constraints. |
+| **Future booking engine** | ✅ Done | live availability, payments, deposits, customer dashboard, CRM sync | Fully implemented: Sanity schemas, Booking API, Booking UI, NextAuth integration, and Customer Dashboard. |
 
 ## Recent Implementation Updates
 
-1. **CMS Schema Completion:**
+1. **Booking Engine & Authentication (P2):**
+   - Implemented a full booking flow: Sanity schema (`bookingType.ts`), Booking API with availability checks, and a `BookingForm` component.
+   - Integrated NextAuth for secure customer access to the new **Customer Dashboard**.
+   - Added CRM sync via local NDJSON storage and webhook support for new bookings.
+2. **Testing & Quality Assurance:**
+   - Established a testing environment with Vitest and React Testing Library.
+   - Achieved >80% line coverage for all new components (`BookingForm`, Booking API, `booking-store`).
+   - Verified that the incremental build remains green and all tests pass.
+3. **SEO & Navigation:**
+   - Added "Login/Dashboard" links to the `SiteHeader`.
+   - Updated `vehicleType.ts` to support live availability flags.
+4. **CMS Schema Completion:**
    - Added `testimonialType.ts`, `branchType.ts`, and `partnershipProgramType.ts` to fully mirror the `plan.prd` data structures.
 2. **Analytics & Event Tracking:**
    - Implemented `analytics.tsx` for client-side tracking using Google Analytics (`gtag`).

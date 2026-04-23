@@ -289,6 +289,7 @@ export const vehicles: Vehicle[] = [
     },
   },
   {
+    id: "v-sunny-silver",
     slug: "nissan-sunny-silver",
     image: "/fleet/12556.png",
     name: { ar: "نيسان صني", en: "Nissan Sunny" },
@@ -324,6 +325,7 @@ export const vehicles: Vehicle[] = [
     },
   },
   {
+    id: "v-sonet-charcoal",
     slug: "kia-sonet-charcoal",
     image: "/fleet/14897.png",
     name: { ar: "كيا سونيت", en: "Kia Sonet" },
@@ -359,6 +361,7 @@ export const vehicles: Vehicle[] = [
     },
   },
   {
+    id: "v-corolla-white",
     slug: "toyota-corolla-white",
     image: "/fleet/22383.png",
     name: { ar: "تويوتا كورولا البيضاء", en: "Toyota Corolla White" },
@@ -394,6 +397,7 @@ export const vehicles: Vehicle[] = [
     },
   },
   {
+    id: "v-carens-silver",
     slug: "kia-carens-silver",
     image: "/fleet/25698.png",
     name: { ar: "كيا كارينز", en: "Kia Carens" },
@@ -429,6 +433,7 @@ export const vehicles: Vehicle[] = [
     },
   },
   {
+    id: "v-sonet-blue",
     slug: "kia-sonet-blue",
     image: "/fleet/32145.png",
     name: { ar: "كيا سونيت الزرقاء", en: "Kia Sonet Blue" },
@@ -464,6 +469,7 @@ export const vehicles: Vehicle[] = [
     },
   },
   {
+    id: "v-yaris-sedan",
     slug: "toyota-yaris-sedan",
     image: "/fleet/32148.png",
     name: { ar: "تويوتا يارس", en: "Toyota Yaris" },
@@ -499,6 +505,7 @@ export const vehicles: Vehicle[] = [
     },
   },
   {
+    id: "v-altima-silver",
     slug: "nissan-altima-silver",
     image: "/fleet/56834.png",
     name: { ar: "نيسان ألتيما", en: "Nissan Altima" },
@@ -534,6 +541,7 @@ export const vehicles: Vehicle[] = [
     },
   },
   {
+    id: "v-altima-black",
     slug: "nissan-altima-black",
     image: "/fleet/58634...png",
     name: { ar: "نيسان ألتيما السوداء", en: "Nissan Altima Black" },
@@ -569,6 +577,7 @@ export const vehicles: Vehicle[] = [
     },
   },
   {
+    id: "v-carens-blue",
     slug: "kia-carens-blue",
     image: "/fleet/67207.png",
     name: { ar: "كيا كارينز الزرقاء", en: "Kia Carens Blue" },
@@ -604,6 +613,7 @@ export const vehicles: Vehicle[] = [
     },
   },
   {
+    id: "v-pegas-blue",
     slug: "kia-pegas-blue",
     image: "/fleet/71085...png",
     name: { ar: "كيا بيجاس", en: "Kia Pegas" },
@@ -639,6 +649,7 @@ export const vehicles: Vehicle[] = [
     },
   },
   {
+    id: "v-sonet-white",
     slug: "kia-sonet-white",
     image: "/fleet/71286.png",
     name: { ar: "كيا سونيت البيضاء", en: "Kia Sonet White" },
@@ -674,6 +685,7 @@ export const vehicles: Vehicle[] = [
     },
   },
   {
+    id: "v-yaris-hatch",
     slug: "toyota-yaris-hatch",
     image: "/fleet/71921.png",
     name: { ar: "تويوتا يارس هاتشباك", en: "Toyota Yaris Hatchback" },
@@ -709,6 +721,7 @@ export const vehicles: Vehicle[] = [
     },
   },
   {
+    id: "v-picanto-white",
     slug: "kia-picanto-white",
     image: "/fleet/81096.png",
     name: { ar: "كيا بيكانتو", en: "Kia Picanto" },
@@ -743,6 +756,7 @@ export const vehicles: Vehicle[] = [
       en: "Rent a Kia Picanto in the UAE from AED 60 daily for compact city-friendly mobility.",
     },
   },
+
 ];
 
 export const services: ServicePage[] = [

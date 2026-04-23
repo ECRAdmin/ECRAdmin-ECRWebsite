@@ -9,11 +9,13 @@ import { siteSettingsType } from "@/sanity/schemaTypes/siteSettingsType";
 import { testimonialType } from "@/sanity/schemaTypes/testimonialType";
 import { vehicleType } from "@/sanity/schemaTypes/vehicleType";
 import { bookingType } from "@/sanity/schemaTypes/bookingType";
+import { rateLimitType } from "@/sanity/schemaTypes/rateLimitType";
 
 export const schemaTypes = [
   siteSettingsType,
   vehicleType,
   bookingType,
+  rateLimitType,
   cityType,
   serviceType,
   offerType,

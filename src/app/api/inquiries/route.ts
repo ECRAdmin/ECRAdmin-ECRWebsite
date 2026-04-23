@@ -1,10 +1,20 @@
 import { NextResponse } from "next/server";
 import { inquirySchema, storeInquiry } from "@/lib/lead-store";
 import { buildInquiryMessage } from "@/lib/site-data";
+import { isRateLimited } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0] ?? "unknown";
+  
+  if (await isRateLimited(ip)) {
+    return NextResponse.json(
+      { error: "Too many requests. Please try again later." },
+      { status: 429 }
+    );
+  }
+
   try {
     const body = await request.json();
     const result = inquirySchema.safeParse({

@@ -14,7 +14,7 @@ export async function GET(request: Request) {
   const localeParam = searchParams.get("locale") ?? "en";
   const locale = isLocale(localeParam) ? localeParam : "en";
 
-  return NextResponse.json(getPublicFleet(locale), {
+  return NextResponse.json(await getPublicFleet(locale), {
     headers: noIndexHeaders(),
   });
 }

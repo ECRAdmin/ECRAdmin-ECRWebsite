@@ -112,7 +112,7 @@ function createServer() {
         locale: LOCALE_SCHEMA,
       },
     },
-    async ({ locale }) => formatToolResult(getPublicFleet(locale as Locale)),
+    async ({ locale }) => formatToolResult(await getPublicFleet(locale as Locale)),
   );
 
   server.registerTool(

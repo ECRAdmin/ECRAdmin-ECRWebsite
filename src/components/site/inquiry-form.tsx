@@ -191,14 +191,15 @@ export function InquiryForm({
         />
         <Field label={t.preferredDate} name="preferredDate" type="date" required />
         <div className={compact ? "" : "sm:col-span-2"}>
-          <label className="mb-2 block text-sm text-[var(--text-muted)]">
+          <label htmlFor="notes" className="mb-2 block text-sm text-[var(--text-muted)]">
             {t.notes}
           </label>
           <textarea
+            id="notes"
             name="notes"
             rows={4}
             placeholder={t.notesPlaceholder}
-            className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white placeholder:text-[var(--text-subtle)]"
+            className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white placeholder:text-[var(--text-subtle)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
           />
         </div>
       </div>
@@ -272,16 +273,20 @@ function Field({
   required?: boolean;
 }) {
   return (
-    <label className="block">
-      <span className="mb-2 block text-sm text-[var(--text-muted)]">{label}</span>
+    <div className="block">
+      <label htmlFor={name} className="mb-2 block text-sm text-[var(--text-muted)]">
+        {label} {required && <span aria-hidden="true">*</span>}
+      </label>
       <input
+        id={name}
         type={type}
         name={name}
         placeholder={placeholder}
         required={required}
-        className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white placeholder:text-[var(--text-subtle)]"
+        aria-required={required}
+        className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white placeholder:text-[var(--text-subtle)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
       />
-    </label>
+    </div>
   );
 }
 
@@ -297,12 +302,15 @@ function SelectField({
   defaultValue?: string;
 }) {
   return (
-    <label className="block">
-      <span className="mb-2 block text-sm text-[var(--text-muted)]">{label}</span>
+    <div className="block">
+      <label htmlFor={name} className="mb-2 block text-sm text-[var(--text-muted)]">
+        {label}
+      </label>
       <select
+        id={name}
         name={name}
         defaultValue={defaultValue}
-        className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white"
+        className="w-full appearance-none rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
       >
         {options.map((option) => (
           <option key={option.value} value={option.value} className="bg-black text-white">
@@ -310,6 +318,6 @@ function SelectField({
           </option>
         ))}
       </select>
-    </label>
+    </div>
   );
 }

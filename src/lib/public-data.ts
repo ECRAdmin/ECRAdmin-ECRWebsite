@@ -28,7 +28,34 @@ export function getPublicServiceAreas(locale: Locale) {
   return siteConfig.serviceAreas.map((item) => localize(locale, item));
 }
 
-export function getPublicFleet(locale: Locale) {
+import { sanityClient } from "@/lib/sanity/client";
+
+export async function getPublicFleet(locale: Locale) {
+  if (sanityClient) {
+    try {
+      const fleet = await sanityClient.fetch(`*[_type == "vehicle"] {
+        "id": _id,
+        "slug": slug.current,
+        "image": image.asset->url,
+        "name": { "ar": nameAr, "en": nameEn },
+        "category": category,
+        "dailyFrom": dailyFrom,
+        "monthlyFrom": monthlyFrom,
+        "seats": seats,
+        "bags": bags,
+        "transmission": { "ar": transmissionAr, "en": transmissionEn },
+        "fuel": { "ar": fuelAr, "en": fuelEn },
+        "badge": { "ar": badgeAr, "en": badgeEn },
+        "excerpt": { "ar": excerptAr, "en": excerptEn }
+      }`);
+      
+      if (fleet && fleet.length > 0) {
+        return fleet.map((vehicle: any) => publicVehicleSummary(locale, vehicle));
+      }
+    } catch (e) {
+      console.error("Sanity fetch error:", e);
+    }
+  }
   return vehicles.map((vehicle) => publicVehicleSummary(locale, vehicle));
 }
 

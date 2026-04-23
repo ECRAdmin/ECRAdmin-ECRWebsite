@@ -3,5 +3,15 @@
   "scope": "codebase",
   "type": "frontend",
   "localEndpoint": "http://localhost:3000/",
-  "serverPort": 59765
+  "serverPort": 51221,
+  "executionArgs": {
+    "projectName": "2026-04-23-files-mentioned-by-the-user-new",
+    "projectPath": "c:\\Users\\HP\\Documents\\Codex\\2026-04-23-files-mentioned-by-the-user-new",
+    "testIds": [],
+    "additionalInstruction": "test booking and inquiry forms",
+    "serverMode": "development",
+    "envs": {
+      "API_KEY": "sk-user-K8YX4s6Nvth5WJnggQBLR5NzkdDYKkGiF6xcF6zXl4GbqpJ0Sad_1D9nObma7XxYj-28H5qnmBYxKr9JuJc82RfwKHwzskkUnqDu4JjS1hGrHLhq4lsWjzi3he2jmYCa_q4"
+    }
+  }
 }

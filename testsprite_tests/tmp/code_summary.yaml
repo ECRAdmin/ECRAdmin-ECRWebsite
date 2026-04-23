@@ -1,0 +1,141 @@
+version: "2"
+type: frontend
+tech_stack:
+  - TypeScript
+  - Next.js (App Router)
+  - React
+  - Tailwind CSS
+  - GSAP
+  - Sanity (Headless CMS)
+  - NextAuth.js
+  - Upstash Redis
+  - Zod
+routes:
+  - path: /
+    file: src/app/[locale]/page.tsx
+    auth_required: false
+    description: Landing page with hero scene and booking search
+  - path: /about
+    file: src/app/[locale]/about/page.tsx
+    auth_required: false
+    description: About Us page
+  - path: /cities/[slug]
+    file: src/app/[locale]/cities/[slug]/page.tsx
+    auth_required: false
+    description: City-specific rental information
+  - path: /contact
+    file: src/app/[locale]/contact/page.tsx
+    auth_required: false
+    description: Contact page with inquiry form
+  - path: /corporate
+    file: src/app/[locale]/corporate/page.tsx
+    auth_required: false
+    description: Corporate services page
+  - path: /daily-rental
+    file: src/app/[locale]/daily-rental/page.tsx
+    auth_required: false
+    description: Daily car rental page
+  - path: /dashboard
+    file: src/app/[locale]/dashboard/page.tsx
+    auth_required: true
+    description: User dashboard for bookings
+  - path: /faq
+    file: src/app/[locale]/faq/page.tsx
+    auth_required: false
+    description: Frequently Asked Questions
+  - path: /fleet
+    file: src/app/[locale]/fleet/page.tsx
+    auth_required: false
+    description: Fleet overview page
+  - path: /fleet/[slug]
+    file: src/app/[locale]/fleet/[slug]/page.tsx
+    auth_required: false
+    description: Individual vehicle details
+  - path: /guides/[slug]
+    file: src/app/[locale]/guides/[slug]/page.tsx
+    auth_required: false
+    description: Travel and rental guides
+  - path: /login
+    file: src/app/[locale]/login/page.tsx
+    auth_required: false
+    description: User login page
+  - path: /monthly-rental
+    file: src/app/[locale]/monthly-rental/page.tsx
+    auth_required: false
+    description: Monthly car rental page
+  - path: /offers
+    file: src/app/[locale]/offers/page.tsx
+    auth_required: false
+    description: Current rental offers
+  - path: /privacy
+    file: src/app/[locale]/privacy/page.tsx
+    auth_required: false
+    description: Privacy policy
+  - path: /services/[slug]
+    file: src/app/[locale]/services/[slug]/page.tsx
+    auth_required: false
+    description: Rental service details
+  - path: /terms
+    file: src/app/[locale]/terms/page.tsx
+    auth_required: false
+    description: Terms and conditions
+features:
+  - name: Booking Search
+    description: Search for available vehicles by location and date
+    files:
+      - src/components/site/booking-form.tsx
+      - src/lib/booking-store.ts
+    entry_route: /
+    user_interactions:
+      - Select pickup location
+      - Select pickup date and time
+      - Select return location
+      - Select return date and time
+      - Click search button
+    api_calls:
+      - method: GET
+        endpoint: /api/public/fleet
+    auth_required: false
+  - name: Fleet Explorer
+    description: Browse and filter available car fleet
+    files:
+      - src/components/site/fleet-explorer.tsx
+    entry_route: /fleet
+    user_interactions:
+      - Filter by car category
+      - Sort by price
+      - Click on a car to see details
+    api_calls:
+      - method: GET
+        endpoint: /api/public/fleet
+    auth_required: false
+  - name: Inquiry Submission
+    description: Submit a general inquiry or contact request
+    files:
+      - src/components/site/inquiry-form.tsx
+      - src/app/api/inquiries/route.ts
+    entry_route: /contact
+    user_interactions:
+      - Fill in name
+      - Fill in email
+      - Fill in message
+      - Click submit button
+    api_calls:
+      - method: POST
+        endpoint: /api/inquiries
+    auth_required: false
+  - name: User Login
+    description: Login with credentials via NextAuth
+    files:
+      - src/app/[locale]/login/page.tsx
+      - src/auth.ts
+    entry_route: /login
+    user_interactions:
+      - Enter email
+      - Enter password
+      - Click login button
+    api_calls:
+      - method: POST
+        endpoint: /api/auth/callback/credentials
+    auth_required: false
+known_limitations: []

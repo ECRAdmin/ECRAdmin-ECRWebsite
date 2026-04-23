@@ -3,6 +3,7 @@
 import { useMemo, useState, useTransition } from "react";
 import type { Locale } from "@/lib/locale";
 import { buildInquiryMessage, siteConfig, vehicles } from "@/lib/site-data";
+import { event } from "@/components/common/analytics";
 
 interface InquiryFormProps {
   locale: Locale;
@@ -100,12 +101,23 @@ export function InquiryForm({
 
       const result = await response.json();
       if (!response.ok) {
+        event({
+          action: "form_error",
+          category: "inquiry",
+          label: result.error ?? "unknown",
+        });
         setState({
           success: false,
           message: result.error ?? "Unable to submit inquiry.",
         });
         return;
       }
+
+      event({
+        action: "form_submit_success",
+        category: "inquiry",
+        label: defaultVehicle ?? "general",
+      });
 
       setState({
         success: true,
@@ -205,12 +217,22 @@ export function InquiryForm({
         <button
           type="submit"
           disabled={isPending}
+          onClick={() => {
+            if (!isPending) {
+              event({
+                action: "form_submit_attempt",
+                category: "inquiry",
+                label: defaultVehicle ?? "general",
+              });
+            }
+          }}
           className="rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-black transition hover:bg-[var(--accent-bright)] disabled:opacity-70"
         >
           {isPending ? t.sending : t.submit}
         </button>
         <a
           href={defaultWhatsappUrl}
+          onClick={() => event({ action: "click_whatsapp", category: "conversion", label: "form_direct" })}
           className="rounded-full border border-white/12 px-6 py-3 text-sm font-semibold text-white transition hover:border-[var(--border-strong)]"
         >
           WhatsApp
@@ -223,6 +245,7 @@ export function InquiryForm({
           {state.success && state.whatsappUrl ? (
             <a
               href={state.whatsappUrl}
+              onClick={() => event({ action: "click_whatsapp_after_success", category: "conversion", label: "form_success" })}
               className="mt-3 inline-flex rounded-full bg-white px-4 py-2 font-semibold text-black"
             >
               {t.continueWhatsapp}

@@ -57,6 +57,8 @@ export const viewport: Viewport = {
   themeColor: "#09090a",
 };
 
+import { Analytics } from "@/components/common/analytics";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -69,6 +71,7 @@ export default function RootLayout({
     >
       <body className="min-h-full bg-[var(--surface)] text-[var(--text)]">
         {children}
+        <Analytics />
       </body>
     </html>
   );

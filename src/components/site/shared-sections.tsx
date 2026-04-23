@@ -4,6 +4,7 @@ import { formatCurrency, localize } from "@/lib/locale";
 import { LocaleLink } from "@/components/common/locale-link";
 import { Reveal } from "@/components/common/reveal";
 import { SectionHeading } from "@/components/common/section-heading";
+import { event } from "@/components/common/analytics";
 import { HeroScene } from "@/components/site/hero-scene";
 import { InquiryForm } from "@/components/site/inquiry-form";
 import type {
@@ -113,6 +114,7 @@ export function HomeHero({
                 </LocaleLink>
                 <a
                   href={`https://wa.me/${siteConfig.company.whatsapp.replace(/[^\d]/g, "")}`}
+                  onClick={() => event({ action: "click_whatsapp", category: "conversion", label: "hero_direct" })}
                   className="rounded-full border border-white/10 px-6 py-3 text-sm font-semibold text-white transition hover:border-[var(--border-strong)]"
                 >
                   {locale === "ar" ? "واتساب الآن" : "WhatsApp now"}

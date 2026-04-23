@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import type { Locale } from "@/lib/locale";
 import { formatCurrency, localize } from "@/lib/locale";

@@ -118,7 +118,7 @@ export function getPublicContactChannels(locale: Locale) {
     phone: siteConfig.company.phoneDisplay,
     whatsapp: siteConfig.company.whatsapp,
     email: siteConfig.company.email,
-    inquiryUrl: buildInquiryMessage(locale),
+    inquiryUrl: buildInquiryMessage(locale, {}),
   };
 }
 

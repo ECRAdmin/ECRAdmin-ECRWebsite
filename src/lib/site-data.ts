@@ -1148,14 +1148,18 @@ export function getGuideBySlug(slug: string) {
   return guides.find((guide) => guide.slug === slug);
 }
 
-export function buildInquiryMessage(locale: Locale, data: any) {
+export function buildInquiryMessage(locale: Locale, data: any = {}) {
   const isAr = locale === "ar";
-  const name = data.name || (isAr ? "عميل" : "Customer");
-  const car = data.preferredCar || (isAr ? "سيارة" : "a vehicle");
+  
+  // Handle case where data is a string (car name)
+  const context = typeof data === "string" ? { preferredCar: data } : (data || {});
+  
+  const name = context.name || (isAr ? "عميل" : "Customer");
+  const car = context.preferredCar || (isAr ? "سيارة" : "a vehicle");
   
   const text = isAr
-    ? `مرحبًا Eagle Car Rental، أنا ${name}. أرغب في الاستفسار عن ${car}.\nالمدينة: ${data.pickupCity || "غير محدد"}\nالميزانية: ${data.budgetBand || "غير محدد"}\nالتاريخ: ${data.preferredDate || "غير محدد"}`
-    : `Hello Eagle Car Rental, I'm ${name}. I'd like to inquire about ${car}.\nCity: ${data.pickupCity || "N/A"}\nBudget: ${data.budgetBand || "N/A"}\nDate: ${data.preferredDate || "N/A"}`;
+    ? `مرحبًا Eagle Car Rental، أنا ${name}. أرغب في الاستفسار عن ${car}.\nالمدينة: ${context.pickupCity || "غير محدد"}\nالميزانية: ${context.budgetBand || "غير محدد"}\nالتاريخ: ${context.preferredDate || "غير محدد"}`
+    : `Hello Eagle Car Rental, I'm ${name}. I'd like to inquire about ${car}.\nCity: ${context.pickupCity || "N/A"}\nBudget: ${context.budgetBand || "N/A"}\nDate: ${context.preferredDate || "N/A"}`;
 
   return buildWhatsAppUrl(siteConfig.company.whatsapp, text);
 }

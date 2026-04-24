@@ -9,6 +9,7 @@ import { FloatingContactBar } from "@/components/layout/floating-contact-bar";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { Analytics } from "@/components/common/analytics";
+import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 
 const alexandria = Alexandria({
   variable: "--font-sans",
@@ -96,6 +97,7 @@ export default async function LocaleLayout({
         <SiteFooter locale={typedLocale} />
         <FloatingContactBar locale={typedLocale} />
         <Analytics />
+        <VercelAnalytics />
       </body>
     </html>
   );

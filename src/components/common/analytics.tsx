@@ -3,6 +3,7 @@
 import Script from "next/script";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, Suspense } from "react";
+import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
 
 declare global {
   interface Window {
@@ -27,19 +28,23 @@ function AnalyticsContent() {
 }
 
 export function Analytics() {
-  if (!GA_MEASUREMENT_ID) return null;
-
   return (
     <>
-      <Script
-        strategy="afterInteractive"
-        src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-      />
-      <Script
-        id="google-analytics"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
+      {/* Vercel Web Analytics */}
+      <VercelAnalytics />
+      
+      {/* Google Analytics */}
+      {GA_MEASUREMENT_ID && (
+        <>
+          <Script
+            strategy="afterInteractive"
+            src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+          />
+          <Script
+            id="google-analytics"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
@@ -47,11 +52,13 @@ export function Analytics() {
               page_path: window.location.pathname,
             });
           `,
-        }}
-      />
-      <Suspense fallback={null}>
-        <AnalyticsContent />
-      </Suspense>
+            }}
+          />
+          <Suspense fallback={null}>
+            <AnalyticsContent />
+          </Suspense>
+        </>
+      )}
     </>
   );
 }

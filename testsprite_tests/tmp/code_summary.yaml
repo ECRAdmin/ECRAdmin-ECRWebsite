@@ -5,137 +5,88 @@ tech_stack:
   - Next.js (App Router)
   - React
   - Tailwind CSS
+  - Lucide React
   - GSAP
-  - Sanity (Headless CMS)
+  - Sanity CMS
   - NextAuth.js
-  - Upstash Redis
-  - Zod
 routes:
-  - path: /
+  - path: /[locale]
     file: src/app/[locale]/page.tsx
     auth_required: false
-    description: Landing page with hero scene and booking search
-  - path: /about
+    description: Homepage with hero scene and featured cars
+  - path: /[locale]/about
     file: src/app/[locale]/about/page.tsx
     auth_required: false
     description: About Us page
-  - path: /cities/[slug]
-    file: src/app/[locale]/cities/[slug]/page.tsx
+  - path: /[locale]/fleet
+    file: src/app/[locale]/fleet/page.tsx
     auth_required: false
-    description: City-specific rental information
-  - path: /contact
+    description: Car fleet explorer page
+  - path: /[locale]/fleet/[slug]
+    file: src/app/[locale]/fleet/[slug]/page.tsx
+    auth_required: false
+    description: Individual car detail page
+  - path: /[locale]/contact
     file: src/app/[locale]/contact/page.tsx
     auth_required: false
     description: Contact page with inquiry form
-  - path: /corporate
-    file: src/app/[locale]/corporate/page.tsx
-    auth_required: false
-    description: Corporate services page
-  - path: /daily-rental
-    file: src/app/[locale]/daily-rental/page.tsx
-    auth_required: false
-    description: Daily car rental page
-  - path: /dashboard
-    file: src/app/[locale]/dashboard/page.tsx
-    auth_required: true
-    description: User dashboard for bookings
-  - path: /faq
-    file: src/app/[locale]/faq/page.tsx
-    auth_required: false
-    description: Frequently Asked Questions
-  - path: /fleet
-    file: src/app/[locale]/fleet/page.tsx
-    auth_required: false
-    description: Fleet overview page
-  - path: /fleet/[slug]
-    file: src/app/[locale]/fleet/[slug]/page.tsx
-    auth_required: false
-    description: Individual vehicle details
-  - path: /guides/[slug]
-    file: src/app/[locale]/guides/[slug]/page.tsx
-    auth_required: false
-    description: Travel and rental guides
-  - path: /login
+  - path: /[locale]/login
     file: src/app/[locale]/login/page.tsx
     auth_required: false
     description: User login page
-  - path: /monthly-rental
-    file: src/app/[locale]/monthly-rental/page.tsx
+  - path: /[locale]/dashboard
+    file: src/app/[locale]/dashboard/page.tsx
+    auth_required: true
+    description: User dashboard for managing bookings
+  - path: /[locale]/faq
+    file: src/app/[locale]/faq/page.tsx
     auth_required: false
-    description: Monthly car rental page
-  - path: /offers
+    description: Frequently Asked Questions
+  - path: /[locale]/offers
     file: src/app/[locale]/offers/page.tsx
     auth_required: false
-    description: Current rental offers
-  - path: /privacy
-    file: src/app/[locale]/privacy/page.tsx
-    auth_required: false
-    description: Privacy policy
-  - path: /services/[slug]
-    file: src/app/[locale]/services/[slug]/page.tsx
-    auth_required: false
-    description: Rental service details
-  - path: /terms
-    file: src/app/[locale]/terms/page.tsx
-    auth_required: false
-    description: Terms and conditions
+    description: Special offers and promotions
 features:
-  - name: Booking Search
-    description: Search for available vehicles by location and date
+  - name: Car Booking
+    description: Users can book a vehicle by filling out a booking form
     files:
       - src/components/site/booking-form.tsx
+      - src/app/api/bookings/route.ts
       - src/lib/booking-store.ts
-    entry_route: /
+    entry_route: /[locale]/fleet/[slug]
     user_interactions:
-      - Select pickup location
-      - Select pickup date and time
-      - Select return location
-      - Select return date and time
-      - Click search button
+      - Navigate to a car detail page
+      - Fill in pickup and dropoff dates
+      - Select locations
+      - Click 'Book Now'
     api_calls:
-      - method: GET
-        endpoint: /api/public/fleet
-    auth_required: false
-  - name: Fleet Explorer
-    description: Browse and filter available car fleet
-    files:
-      - src/components/site/fleet-explorer.tsx
-    entry_route: /fleet
-    user_interactions:
-      - Filter by car category
-      - Sort by price
-      - Click on a car to see details
-    api_calls:
-      - method: GET
-        endpoint: /api/public/fleet
+      - method: POST
+        endpoint: /api/bookings
     auth_required: false
   - name: Inquiry Submission
-    description: Submit a general inquiry or contact request
+    description: Users can send general inquiries via a contact form
     files:
       - src/components/site/inquiry-form.tsx
       - src/app/api/inquiries/route.ts
-    entry_route: /contact
+    entry_route: /[locale]/contact
     user_interactions:
-      - Fill in name
-      - Fill in email
-      - Fill in message
-      - Click submit button
+      - Fill in name, email, and message
+      - Click 'Submit'
     api_calls:
       - method: POST
         endpoint: /api/inquiries
     auth_required: false
-  - name: User Login
-    description: Login with credentials via NextAuth
+  - name: Fleet Explorer
+    description: Users can browse and filter available vehicles
     files:
-      - src/app/[locale]/login/page.tsx
-      - src/auth.ts
-    entry_route: /login
+      - src/components/site/fleet-explorer.tsx
+      - src/app/api/public/fleet/route.ts
+    entry_route: /[locale]/fleet
     user_interactions:
-      - Enter email
-      - Enter password
-      - Click login button
+      - Scroll through car list
+      - Use filters (if any) to narrow down choices
     api_calls:
-      - method: POST
-        endpoint: /api/auth/callback/credentials
+      - method: GET
+        endpoint: /api/public/fleet
     auth_required: false
 known_limitations: []

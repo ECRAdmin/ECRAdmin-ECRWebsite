@@ -1,0 +1,926 @@
+[
+  {
+    "id": "TC001",
+    "title": "Browse fleet list and open a car detail from the listing",
+    "description": "Verifies a visitor can load the fleet list and open a specific car detail page from the listing successfully.",
+    "category": "Fleet Explorer",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /[locale]/fleet"
+      },
+      {
+        "type": "action",
+        "description": "Wait for the fleet list to finish loading"
+      },
+      {
+        "type": "action",
+        "description": "Scroll through the car list"
+      },
+      {
+        "type": "action",
+        "description": "Click a vehicle card to open its detail page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the selected vehicle detail page is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC002",
+    "title": "Open WhatsApp CTA from the homepage with page context",
+    "description": "Verifies the persistent WhatsApp CTA is available on the homepage and opens a WhatsApp deep link with prefilled homepage context.",
+    "category": "Persistent WhatsApp Conversion CTA",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /[locale]"
+      },
+      {
+        "type": "action",
+        "description": "Click the persistent WhatsApp call-to-action"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the browser opens a WhatsApp deep link with a prefilled message that includes homepage context"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC003",
+    "title": "Use WhatsApp CTA from offers page with offer context",
+    "description": "Verifies the persistent WhatsApp CTA on the offers page opens a WhatsApp deep link with prefilled context about the offer/page.",
+    "category": "Offers Browsing",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /en/offers"
+      },
+      {
+        "type": "action",
+        "description": "Wait for the offers list to finish loading"
+      },
+      {
+        "type": "action",
+        "description": "Click an offer from the list to open its details"
+      },
+      {
+        "type": "action",
+        "description": "Click the persistent WhatsApp call-to-action"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a WhatsApp deep link is opened with prefilled message context for the current offer/page"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC004",
+    "title": "Switch locale and use WhatsApp CTA from Arabic offers",
+    "description": "Verifies switching to Arabic allows browsing offers and the WhatsApp CTA opens with Arabic offer/page context.",
+    "category": "Offers Browsing",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /en/offers"
+      },
+      {
+        "type": "action",
+        "description": "Click the locale switch control to change to Arabic"
+      },
+      {
+        "type": "action",
+        "description": "Wait for the Arabic offers page to finish loading"
+      },
+      {
+        "type": "action",
+        "description": "Click an offer from the list to open its details"
+      },
+      {
+        "type": "action",
+        "description": "Click the persistent WhatsApp call-to-action"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a WhatsApp deep link is opened with prefilled message context for the current Arabic offer/page"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC005",
+    "title": "Submit a booking request from a selected car",
+    "description": "Verifies a lead can select a vehicle, complete the booking request form, submit it, and see an on-site confirmation with a WhatsApp continuation option.",
+    "category": "Car Booking (lead-first booking request)",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /[locale]/fleet"
+      },
+      {
+        "type": "action",
+        "description": "Wait for the fleet list to finish loading"
+      },
+      {
+        "type": "action",
+        "description": "Click a vehicle card to open its detail page"
+      },
+      {
+        "type": "action",
+        "description": "Initiate a booking request from the vehicle detail page"
+      },
+      {
+        "type": "action",
+        "description": "Fill a valid pickup date into the pickup date field"
+      },
+      {
+        "type": "action",
+        "description": "Fill a valid dropoff date into the dropoff date field"
+      },
+      {
+        "type": "action",
+        "description": "Select a pickup location"
+      },
+      {
+        "type": "action",
+        "description": "Select a dropoff location"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"Test Lead\" into the name field"
+      },
+      {
+        "type": "action",
+        "description": "Fill a valid phone number into the phone field"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"lead.test@example.com\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the booking request"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a booking request confirmation is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a WhatsApp continuation option is available from the confirmation"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC006",
+    "title": "Filter fleet by class to narrow results",
+    "description": "Verifies a visitor can apply a class filter and see the fleet results update accordingly.",
+    "category": "Fleet Explorer",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /[locale]/fleet"
+      },
+      {
+        "type": "action",
+        "description": "Wait for the fleet list to finish loading"
+      },
+      {
+        "type": "action",
+        "description": "Select a vehicle class in the filters"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the fleet results are narrowed to match the selected class"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC007",
+    "title": "Submit a contact inquiry successfully",
+    "description": "Verifies a visitor can submit the contact form with required details and sees an in-page confirmation along with a WhatsApp follow-up CTA.",
+    "category": "Inquiry Submission (Contact form)",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /[locale]/contact"
+      },
+      {
+        "type": "action",
+        "description": "Fill a full name into the name field"
+      },
+      {
+        "type": "action",
+        "description": "Fill a valid email into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Fill an inquiry message into the message field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the inquiry form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an in-page submission confirmation is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a WhatsApp follow-up call-to-action is visible"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC008",
+    "title": "Filter fleet by price band to narrow results",
+    "description": "Verifies a visitor can apply a price band filter and see the fleet results update accordingly.",
+    "category": "Fleet Explorer",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /[locale]/fleet"
+      },
+      {
+        "type": "action",
+        "description": "Wait for the fleet list to finish loading"
+      },
+      {
+        "type": "action",
+        "description": "Select a price band in the filters"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the fleet results are narrowed to match the selected price band"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC009",
+    "title": "Use WhatsApp follow-up after a successful inquiry",
+    "description": "Verifies that after submitting an inquiry, the WhatsApp CTA opens a WhatsApp deep link that includes prefilled context from the contact page.",
+    "category": "Inquiry Submission (Contact form)",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /[locale]/contact"
+      },
+      {
+        "type": "action",
+        "description": "Fill a full name into the name field"
+      },
+      {
+        "type": "action",
+        "description": "Fill a valid email into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Fill an inquiry message into the message field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the inquiry form"
+      },
+      {
+        "type": "action",
+        "description": "Click the WhatsApp follow-up call-to-action"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the browser opens a WhatsApp deep link with a prefilled message that includes contact page context"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC010",
+    "title": "WhatsApp CTA remains accessible after scrolling a long page",
+    "description": "Verifies the persistent WhatsApp CTA remains usable after the user scrolls and still opens a WhatsApp deep link with page context.",
+    "category": "Persistent WhatsApp Conversion CTA",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /[locale]/faq"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the bottom of the page"
+      },
+      {
+        "type": "action",
+        "description": "Click the persistent WhatsApp call-to-action"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the browser opens a WhatsApp deep link with a prefilled message that includes FAQ page context"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC011",
+    "title": "Booking request retains selected car context through submission",
+    "description": "Verifies that when a booking request is started from a specific vehicle detail page, the confirmation reflects that the request is associated with the selected vehicle.",
+    "category": "Car Booking (lead-first booking request)",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /[locale]/fleet"
+      },
+      {
+        "type": "action",
+        "description": "Wait for the fleet list to finish loading"
+      },
+      {
+        "type": "action",
+        "description": "Click a vehicle card to open its detail page"
+      },
+      {
+        "type": "action",
+        "description": "Initiate a booking request from the vehicle detail page"
+      },
+      {
+        "type": "action",
+        "description": "Fill a valid pickup date into the pickup date field"
+      },
+      {
+        "type": "action",
+        "description": "Fill a valid dropoff date into the dropoff date field"
+      },
+      {
+        "type": "action",
+        "description": "Select a pickup location"
+      },
+      {
+        "type": "action",
+        "description": "Select a dropoff location"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"Context Check\" into the name field"
+      },
+      {
+        "type": "action",
+        "description": "Fill a valid phone number into the phone field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the booking request"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a booking request confirmation is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the confirmation indicates the request is for the selected vehicle"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC012",
+    "title": "Browse offers list and open an offer detail",
+    "description": "Verifies a visitor can view available offers and open a specific offer to see its details.",
+    "category": "Offers Browsing",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /en/offers"
+      },
+      {
+        "type": "action",
+        "description": "Wait for the offers list to finish loading"
+      },
+      {
+        "type": "action",
+        "description": "Click an offer from the list to open its details"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the offer detail view is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC013",
+    "title": "Combine class and price filters together",
+    "description": "Verifies a visitor can apply both class and price filters and the fleet list reflects both constraints.",
+    "category": "Fleet Explorer",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /[locale]/fleet"
+      },
+      {
+        "type": "action",
+        "description": "Wait for the fleet list to finish loading"
+      },
+      {
+        "type": "action",
+        "description": "Select a vehicle class in the filters"
+      },
+      {
+        "type": "action",
+        "description": "Select a price band in the filters"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the fleet results reflect both the selected class and selected price band"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC014",
+    "title": "Login and view dashboard booking requests",
+    "description": "Verifies a returning user can sign in and reach the dashboard where their booking requests and statuses are displayed.",
+    "category": "Login & Dashboard (authenticated booking management)",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /en/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_USER}} into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user lands on the dashboard and a list of booking requests with statuses is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC015",
+    "title": "Recover from validation errors and submit successfully",
+    "description": "Verifies a visitor can correct missing required fields after validation errors and then submit successfully with a confirmation shown.",
+    "category": "Inquiry form validation (user-correctable error flow)",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /[locale]/contact"
+      },
+      {
+        "type": "action",
+        "description": "Submit the inquiry form"
+      },
+      {
+        "type": "action",
+        "description": "Fill a full name into the name field"
+      },
+      {
+        "type": "action",
+        "description": "Fill a valid email into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Fill an inquiry message into the message field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the inquiry form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an in-page submission confirmation is visible"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC016",
+    "title": "Correct booking validation errors and submit successfully",
+    "description": "Verifies a lead can fix missing required fields after validation errors and successfully submit a booking request to get a confirmation.",
+    "category": "Booking form validation (user-correctable error flow)",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /[locale]/fleet"
+      },
+      {
+        "type": "action",
+        "description": "Wait for the fleet list to finish loading"
+      },
+      {
+        "type": "action",
+        "description": "Click a vehicle card to open its detail page"
+      },
+      {
+        "type": "action",
+        "description": "Initiate a booking request from the vehicle detail page"
+      },
+      {
+        "type": "action",
+        "description": "Submit the booking request without filling required fields"
+      },
+      {
+        "type": "action",
+        "description": "Fill a valid pickup date into the pickup date field"
+      },
+      {
+        "type": "action",
+        "description": "Fill a valid dropoff date into the dropoff date field"
+      },
+      {
+        "type": "action",
+        "description": "Select a pickup location"
+      },
+      {
+        "type": "action",
+        "description": "Select a dropoff location"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"Fix Errors\" into the name field"
+      },
+      {
+        "type": "action",
+        "description": "Fill a valid phone number into the phone field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the booking request"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a booking request confirmation is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC017",
+    "title": "Offers can be referenced via inquiry entry point",
+    "description": "Verifies a visitor can start an inquiry journey from an offer context without losing the offer reference intent.",
+    "category": "Offers Browsing",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /en/offers"
+      },
+      {
+        "type": "action",
+        "description": "Wait for the offers list to finish loading"
+      },
+      {
+        "type": "action",
+        "description": "Click an offer from the list to open its details"
+      },
+      {
+        "type": "action",
+        "description": "Click the call-to-action to inquire about the offer"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user is presented with an inquiry entry point that reflects the current offer context"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC018",
+    "title": "Submit a contact inquiry with optional fields included",
+    "description": "Verifies the contact form accepts optional details and still completes submission with a visible confirmation.",
+    "category": "Inquiry Submission (Contact form)",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /[locale]/contact"
+      },
+      {
+        "type": "action",
+        "description": "Fill a full name into the name field"
+      },
+      {
+        "type": "action",
+        "description": "Fill a valid email into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Select a residency type"
+      },
+      {
+        "type": "action",
+        "description": "Fill a valid date into the preferred date field"
+      },
+      {
+        "type": "action",
+        "description": "Fill a budget amount into the budget field"
+      },
+      {
+        "type": "action",
+        "description": "Fill an inquiry message into the message field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the inquiry form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an in-page submission confirmation is visible"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC019",
+    "title": "Protected dashboard redirects unauthenticated user to login and returns after login",
+    "description": "Verifies an unauthenticated visitor who opens the dashboard is redirected to login and, after signing in, is taken to the dashboard.",
+    "category": "Login & Dashboard (authenticated booking management)",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /en/dashboard"
+      },
+      {
+        "type": "action",
+        "description": "Wait for the login page to load"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_USER}} into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user lands on the dashboard"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC020",
+    "title": "Session persists on page refresh in dashboard",
+    "description": "Verifies the authenticated session remains active and the dashboard content still loads after a browser refresh.",
+    "category": "Login & Dashboard (authenticated booking management)",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /en/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_USER}} into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Fill {{LOGIN_PASSWORD}} into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Press F5"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the dashboard is still accessible and booking requests are displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC021",
+    "title": "Locale switch shows correct language content on FAQ/About",
+    "description": "Verifies switching locale updates the content language correctly for FAQ and About pages.",
+    "category": "FAQ & About content",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /en/faq"
+      },
+      {
+        "type": "action",
+        "description": "Click the locale switch control to change to Arabic"
+      },
+      {
+        "type": "action",
+        "description": "Wait for the Arabic FAQ page to finish loading"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to view the About page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the About page content is displayed in Arabic"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC022",
+    "title": "Booking form blocks submission when required fields are missing",
+    "description": "Verifies a lead cannot submit an incomplete booking request and sees inline validation prompting required fields.",
+    "category": "Booking form validation (user-correctable error flow)",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /[locale]/fleet"
+      },
+      {
+        "type": "action",
+        "description": "Wait for the fleet list to finish loading"
+      },
+      {
+        "type": "action",
+        "description": "Click a vehicle card to open its detail page"
+      },
+      {
+        "type": "action",
+        "description": "Initiate a booking request from the vehicle detail page"
+      },
+      {
+        "type": "action",
+        "description": "Submit the booking request without filling required fields"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify inline validation errors are displayed for missing required fields"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC023",
+    "title": "Prevent inquiry submission when required fields are missing",
+    "description": "Verifies submitting the contact form without required details shows inline validation and does not submit.",
+    "category": "Inquiry form validation (user-correctable error flow)",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /[locale]/contact"
+      },
+      {
+        "type": "action",
+        "description": "Submit the inquiry form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify inline validation errors are visible for required fields"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify no submission confirmation is shown"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC024",
+    "title": "Read FAQ content",
+    "description": "Verifies a visitor can open the FAQ page and view the FAQ entries.",
+    "category": "FAQ & About content",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /en/faq"
+      },
+      {
+        "type": "action",
+        "description": "Wait for the FAQ page to finish loading"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify FAQ entries are displayed"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC025",
+    "title": "Invalid credentials show login error and do not enter dashboard",
+    "description": "Verifies entering invalid credentials prevents access and shows an on-page error state.",
+    "category": "Login & Dashboard (authenticated booking management)",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /en/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill invalid.user@example.com into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Fill wrongpassword into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a login error is visible and the user is not shown the dashboard"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC026",
+    "title": "Reject invalid email format on the inquiry form",
+    "description": "Verifies entering an invalid email prevents submission and shows an inline email validation error.",
+    "category": "Inquiry form validation (user-correctable error flow)",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /[locale]/contact"
+      },
+      {
+        "type": "action",
+        "description": "Fill a full name into the name field"
+      },
+      {
+        "type": "action",
+        "description": "Fill an invalid email format into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Fill an inquiry message into the message field"
+      },
+      {
+        "type": "action",
+        "description": "Submit the inquiry form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an inline email validation error is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify no submission confirmation is shown"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC027",
+    "title": "Offers page supports empty state without breaking navigation",
+    "description": "Verifies the offers page remains usable and presents an appropriate empty state when no offers are shown in the UI.",
+    "category": "Offers Browsing",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /en/offers"
+      },
+      {
+        "type": "action",
+        "description": "Wait for the offers page to finish loading"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify either offers are displayed or an empty state message is visible"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC028",
+    "title": "Read About page content",
+    "description": "Verifies a visitor can open the About page and view company information content.",
+    "category": "FAQ & About content",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /en/about"
+      },
+      {
+        "type": "action",
+        "description": "Wait for the About page to finish loading"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify company information content is displayed"
+      }
+    ],
+    "priority": "Low"
+  }
+]

@@ -1,0 +1,86 @@
+import asyncio
+from playwright import async_api
+from playwright.async_api import expect
+
+async def run_test():
+    pw = None
+    browser = None
+    context = None
+
+    try:
+        # Start a Playwright session in asynchronous mode
+        pw = await async_api.async_playwright().start()
+
+        # Launch a Chromium browser in headless mode with custom arguments
+        browser = await pw.chromium.launch(
+            headless=True,
+            args=[
+                "--window-size=1280,720",         # Set the browser window size
+                "--disable-dev-shm-usage",        # Avoid using /dev/shm which can cause issues in containers
+                "--ipc=host",                     # Use host-level IPC for better stability
+                "--single-process"                # Run the browser in a single process mode
+            ],
+        )
+
+        # Create a new browser context (like an incognito window)
+        context = await browser.new_context()
+        context.set_default_timeout(5000)
+
+        # Open a new page in the browser context
+        page = await context.new_page()
+
+        # Interact with the page elements to simulate user flow
+        # -> Navigate to http://localhost:3000
+        await page.goto("http://localhost:3000")
+        
+        # -> Click the 'العروض' (Offers) link to open the offers list.
+        frame = context.pages[-1]
+        # Click element
+        elem = frame.locator('xpath=/html/body/header/div/nav/a[5]').nth(0)
+        await asyncio.sleep(3); await elem.click()
+        
+        # -> Click the first offer's 'عرض التفاصيل' link (element index 2750) to open its detail view and then verify the detail page is displayed.
+        frame = context.pages[-1]
+        # Click element
+        elem = frame.locator('xpath=/html/body/main/section[2]/div/div[2]/div/article/a').nth(0)
+        await asyncio.sleep(3); await elem.click()
+        
+        # -> Click the first offer's 'عرض التفاصيل' link again to open its detail view, then verify the detail page or modal is displayed.
+        frame = context.pages[-1]
+        # Click element
+        elem = frame.locator('xpath=/html/body/main/section[2]/div/div[2]/div/article/a').nth(0)
+        await asyncio.sleep(3); await elem.click()
+        
+        # -> Click the offer's 'عرض التفاصيل' link at index 2756 to open its detail view, then verify that the offer detail page or modal is displayed.
+        frame = context.pages[-1]
+        # Click element
+        elem = frame.locator('xpath=/html/body/main/section[2]/div/div[2]/div[2]/article/a').nth(0)
+        await asyncio.sleep(3); await elem.click()
+        
+        # -> Click a different offer's 'عرض التفاصيل' link (index 2762) to open its detail view, then verify the detail page or modal is displayed (look for the offer title or price).
+        frame = context.pages[-1]
+        # Click element
+        elem = frame.locator('xpath=/html/body/main/section[2]/div/div[2]/div[3]/article/a').nth(0)
+        await asyncio.sleep(3); await elem.click()
+        
+        # -> Click the offer article element (index 2751) to open its detail view, then observe the UI for an offer title or price to confirm the detail view. Stop after performing the click and allow the UI to update.
+        frame = context.pages[-1]
+        # Click element
+        elem = frame.locator('xpath=/html/body/main/section[2]/div/div[2]/div/article').nth(0)
+        await asyncio.sleep(3); await elem.click()
+        
+        # --> Assertions to verify final state
+        frame = context.pages[-1]
+        assert await frame.locator("xpath=//*[contains(., 'تفاصيل العرض')]").nth(0).is_visible(), "The offer detail view should be displayed after clicking an offer from the list"
+        await asyncio.sleep(5)
+
+    finally:
+        if context:
+            await context.close()
+        if browser:
+            await browser.close()
+        if pw:
+            await pw.stop()
+
+asyncio.run(run_test())
+    

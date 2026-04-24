@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { locales } from "./lib/locale";
+import { locales } from "./src/lib/locale";
 
-export function proxy(request: NextRequest) {
+export default function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Check if the pathname already has a locale
@@ -13,9 +13,9 @@ export function proxy(request: NextRequest) {
   if (pathnameHasLocale) return;
 
   // Redirect to /ar if no locale is present
-  // In a real app, you might want to detect the user's preferred locale
-  request.nextUrl.pathname = `/ar${pathname}`;
-  return NextResponse.redirect(request.nextUrl);
+  const url = request.nextUrl.clone();
+  url.pathname = `/ar${pathname === "/" ? "" : pathname}`;
+  return NextResponse.redirect(url);
 }
 
 export const config = {

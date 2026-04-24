@@ -36,7 +36,7 @@ export async function POST(request: Request) {
     return NextResponse.json({
       ok: true,
       inquiry: stored,
-      whatsappUrl: buildInquiryMessage(result.data.locale, result.data.preferredCar),
+      whatsappUrl: buildInquiryMessage(result.data.locale, result.data),
     });
   } catch {
     return NextResponse.json(

@@ -101,10 +101,20 @@ export function BookingForm({
   if (state.success) {
     return (
       <div className="gold-ring glass-panel rounded-[2rem] p-8 text-center">
-        <h3 className="text-2xl font-semibold text-white mb-4">{t.success}</h3>
+        <div className="mb-6 flex justify-center">
+          <div className="rounded-full bg-green-500/10 p-3 text-green-500">
+            <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+        </div>
+        <h3 className="text-2xl font-semibold text-white mb-2">{t.success}</h3>
+        <p className="text-[var(--text-muted)] mb-6">
+          {locale === 'ar' ? `لقد اخترت: ${vehicleName}` : `You selected: ${vehicleName}`}
+        </p>
         <button 
           onClick={() => setState({})}
-          className="text-[var(--accent)] hover:underline"
+          className="rounded-full border border-white/10 px-6 py-2 text-sm font-semibold text-white hover:bg-white/5 transition"
         >
           {locale === 'ar' ? 'حجز آخر' : 'Book another'}
         </button>
@@ -127,6 +137,7 @@ export function BookingForm({
             name="startDate" 
             type="date" 
             required 
+            defaultValue={new Date().toISOString().split("T")[0]}
             onChange={(e) => setDates(d => ({ ...d, start: e.target.value }))}
           />
           <Field 
@@ -134,6 +145,7 @@ export function BookingForm({
             name="endDate" 
             type="date" 
             required 
+            defaultValue={new Date(Date.now() + 86400000).toISOString().split("T")[0]}
             onChange={(e) => setDates(d => ({ ...d, end: e.target.value }))}
           />
         </div>
@@ -168,12 +180,14 @@ function Field({
   name, 
   type = "text", 
   required, 
+  defaultValue,
   onChange 
 }: { 
   label: string; 
   name: string; 
   type?: string; 
   required?: boolean;
+  defaultValue?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
   return (
@@ -183,6 +197,7 @@ function Field({
         type={type}
         name={name}
         required={required}
+        defaultValue={defaultValue}
         onChange={onChange}
         className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white placeholder:text-[var(--text-subtle)]"
       />

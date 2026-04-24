@@ -9,6 +9,7 @@ import { SectionHeading } from "@/components/common/section-heading";
 import { event } from "@/components/common/analytics";
 import { HeroScene } from "@/components/site/hero-scene";
 import { InquiryForm } from "@/components/site/inquiry-form";
+import { buildWhatsAppUrl } from "@/lib/utils";
 import type {
   CityPage,
   GuidePage,
@@ -115,7 +116,11 @@ export function HomeHero({
                   {locale === "ar" ? "استعرض الأسطول" : "Explore the fleet"}
                 </LocaleLink>
                 <a
-                  href={`https://wa.me/${siteConfig.company.whatsapp.replace(/[^\d]/g, "")}`}
+                  href={`https://wa.me/${siteConfig.company.whatsapp.replace(/[^\d]/g, "")}?text=${encodeURIComponent(
+                    locale === "ar"
+                      ? "مرحبًا، أرغب في الاستفسار عن تأجير السيارات."
+                      : "Hello, I'd like to inquire about car rentals."
+                  )}`}
                   onClick={() => event({ action: "click_whatsapp", category: "conversion", label: "hero_direct" })}
                   className="rounded-full border border-white/10 px-6 py-3 text-sm font-semibold text-white transition hover:border-[var(--border-strong)]"
                 >
@@ -409,29 +414,50 @@ export function OfferGrid({
           }
         />
         <div className="grid gap-6 lg:grid-cols-3">
-          {items.map((offer, index) => (
-            <Reveal key={offer.slug} delay={index * 90}>
-              <article className="gold-ring glass-panel rounded-[2rem] p-6">
-                <p className="section-kicker">{localize(locale, offer.name)}</p>
-                <p className="mt-4 text-sm leading-7 text-[var(--text-muted)]">
-                  {localize(locale, offer.summary)}
-                </p>
-                <p className="mt-6 font-display text-4xl text-white">
-                  {formatCurrency(locale, offer.priceFrom)}
-                </p>
-                <p className="text-sm text-[var(--text-subtle)]">
-                  {locale === "ar" ? "أسعار تبدأ من يوميًا" : "Starting public daily rate"}
-                </p>
-                <LocaleLink
-                  locale={locale}
-                  href="/offers"
-                  className="mt-8 inline-flex rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-white"
+          {items.map((offer, index) => {
+            const whatsappMessage = locale === "ar"
+              ? `مرحبًا، أرغب في الاستفسار عن عرض: ${offer.name.ar}`
+              : `Hello, I'd like to inquire about the offer: ${offer.name.en}`;
+            const whatsappUrl = buildWhatsAppUrl(siteConfig.company.whatsapp, whatsappMessage);
+
+            return (
+              <Reveal key={offer.slug} delay={index * 90}>
+                <article 
+                  onClick={() => window.open(whatsappUrl, '_blank')}
+                  className="gold-ring glass-panel flex flex-col rounded-[2rem] p-6 cursor-pointer transition hover:bg-white/[0.04]"
                 >
-                  {locale === "ar" ? "عرض التفاصيل" : "See offer details"}
-                </LocaleLink>
-              </article>
-            </Reveal>
-          ))}
+                  <div className="flex-1">
+                    <p className="section-kicker">{localize(locale, offer.name)}</p>
+                    <p className="mt-4 text-sm leading-7 text-[var(--text-muted)]">
+                      {localize(locale, offer.summary)}
+                    </p>
+                    <p className="mt-6 font-display text-4xl text-white">
+                      {formatCurrency(locale, offer.priceFrom)}
+                    </p>
+                    <p className="text-sm text-[var(--text-subtle)]">
+                      {locale === "ar" ? "أسعار تبدأ من يوميًا" : "Starting public daily rate"}
+                    </p>
+                  </div>
+                  <div className="mt-8 flex flex-wrap gap-3">
+                    <a
+                      href={whatsappUrl}
+                      onClick={() => event({ action: "click_whatsapp_offer", category: "conversion", label: offer.slug })}
+                      className="rounded-full bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-black transition hover:bg-[var(--accent-bright)]"
+                    >
+                      {locale === "ar" ? "استفسار واتساب" : "Inquire on WhatsApp"}
+                    </a>
+                    <LocaleLink
+                      locale={locale}
+                      href={`/fleet?category=${offer.slug.split("-")[0]}`}
+                      className="rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-white transition hover:border-[var(--border-strong)]"
+                    >
+                      {locale === "ar" ? "عرض السيارات" : "View vehicles"}
+                    </LocaleLink>
+                  </div>
+                </article>
+              </Reveal>
+            );
+          })}
         </div>
       </div>
     </section>

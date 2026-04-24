@@ -33,7 +33,7 @@ async def run_test():
         # -> Navigate to http://localhost:3000
         await page.goto("http://localhost:3000")
         
-        # -> Click the persistent WhatsApp call-to-action (index 129) to open the WhatsApp deep link and then check the resulting URL or navigation for the prefilled homepage context.
+        # -> Click the persistent WhatsApp call-to-action (the 'واتساب الآن' link) and observe whether a WhatsApp deep link opens with a prefilled message containing homepage context.
         frame = context.pages[-1]
         # Click element
         elem = frame.locator('xpath=/html/body/main/section/div[3]/div/div/div/div[3]/a[2]').nth(0)

@@ -33,59 +33,43 @@ async def run_test():
         # -> Navigate to http://localhost:3000
         await page.goto("http://localhost:3000")
         
-        # -> Fill the required form fields (name, mobile, whatsapp, pickup city, budget), toggle the consent checkbox, then submit the form by clicking the submit button (index 268).
+        # -> Click the 'تواصل' (Contact) link to open the contact page and wait for the page to settle so I can inspect the contact form fields.
         frame = context.pages[-1]
-        # Input text
-        elem = frame.locator('xpath=/html/body/main/section/div[3]/div/div/div[2]/div[2]/form/div[2]/div/input').nth(0)
-        await asyncio.sleep(3); await elem.fill('أحمد محمد')
+        # Click element
+        elem = frame.locator('xpath=/html/body/header/div/nav/a[7]').nth(0)
+        await asyncio.sleep(3); await elem.click()
         
+        # -> Fill the remaining text/date fields, check the consent checkbox, then submit the inquiry form to observe the in-page confirmation and WhatsApp CTA.
         frame = context.pages[-1]
         # Input text
-        elem = frame.locator('xpath=/html/body/main/section/div[3]/div/div/div[2]/div[2]/form/div[2]/div[2]/input').nth(0)
+        elem = frame.locator('xpath=/html/body/main/section[2]/div/form/div[2]/div[4]/input').nth(0)
         await asyncio.sleep(3); await elem.fill('0501234567')
         
         frame = context.pages[-1]
         # Input text
-        elem = frame.locator('xpath=/html/body/main/section/div[3]/div/div/div[2]/div[2]/form/div[2]/div[3]/input').nth(0)
-        await asyncio.sleep(3); await elem.fill('0501234567')
-        
-        # -> Fill pickup city (index 10) and budget band (index 13), toggle consent checkbox (index 15), submit the form (click index 268), then verify an in-page confirmation and that the WhatsApp CTA is visible.
-        frame = context.pages[-1]
-        # Input text
-        elem = frame.locator('xpath=/html/body/main/section/div[3]/div/div/div[2]/div[2]/form/div[2]/div[5]/input').nth(0)
+        elem = frame.locator('xpath=/html/body/main/section[2]/div/form/div[2]/div[6]/input').nth(0)
         await asyncio.sleep(3); await elem.fill('دبي')
         
         frame = context.pages[-1]
         # Input text
-        elem = frame.locator('xpath=/html/body/main/section/div[3]/div/div/div[2]/div[2]/form/div[2]/div[8]/input').nth(0)
+        elem = frame.locator('xpath=/html/body/main/section[2]/div/form/div[2]/div[9]/input').nth(0)
         await asyncio.sleep(3); await elem.fill('50 - 100')
         
+        # -> Check the consent checkbox, submit the inquiry form, then observe the page for an in-page confirmation message and a WhatsApp follow-up CTA.
         frame = context.pages[-1]
         # Click element
-        elem = frame.locator('xpath=/html/body/main/section/div[3]/div/div/div[2]/div[2]/form/label/input').nth(0)
+        elem = frame.locator('xpath=/html/body/main/section[2]/div/form/label/input').nth(0)
         await asyncio.sleep(3); await elem.click()
-        
-        # -> Click the submit button (index 268) to submit the inquiry form, then verify an in-page submission confirmation appears and the WhatsApp follow-up CTA (index 270) is visible.
-        frame = context.pages[-1]
-        # Click element
-        elem = frame.locator('xpath=/html/body/main/section/div[3]/div/div/div[2]/div[2]/form/div[3]/button').nth(0)
-        await asyncio.sleep(3); await elem.click()
-        
-        # -> Fill the preferred date (index 16) with a valid YYYY-MM-DD value, then click the submit button (index 268) to attempt form submission again and verify the in-page confirmation and WhatsApp CTA.
-        frame = context.pages[-1]
-        # Input text
-        elem = frame.locator('xpath=/html/body/main/section/div[3]/div/div/div[2]/div[2]/form/div[2]/div[9]/input').nth(0)
-        await asyncio.sleep(3); await elem.fill('2026-05-10')
         
         frame = context.pages[-1]
         # Click element
-        elem = frame.locator('xpath=/html/body/main/section/div[3]/div/div/div[2]/div[2]/form/div[3]/button').nth(0)
+        elem = frame.locator('xpath=/html/body/main/section[2]/div/form/div[3]/button').nth(0)
         await asyncio.sleep(3); await elem.click()
         
-        # --> Test passed — verified by AI agent
+        # --> Assertions to verify final state
         frame = context.pages[-1]
-        current_url = await frame.evaluate("() => window.location.href")
-        assert current_url is not None, "Test completed successfully"
+        assert await frame.locator("xpath=//*[contains(., 'تم إرسال رسالتك')]").nth(0).is_visible(), "The contact form should show an in-page confirmation after submission"
+        assert await frame.locator("xpath=//*[contains(., 'تواصل معنا عبر واتساب')]").nth(0).is_visible(), "A WhatsApp follow-up call-to-action should be visible after submitting the inquiry"
         await asyncio.sleep(5)
 
     finally:

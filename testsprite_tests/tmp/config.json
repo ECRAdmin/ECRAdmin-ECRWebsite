@@ -7,12 +7,12 @@
     "projectName": "2026-04-23-files-mentioned-by-the-user-new",
     "projectPath": "c:\\Users\\HP\\Documents\\Codex\\2026-04-23-files-mentioned-by-the-user-new",
     "testIds": [],
-    "additionalInstruction": "Test the main flows: car booking and inquiry submission.",
-    "serverMode": "production",
+    "additionalInstruction": "Verify the fixes for Inquiry form success, WhatsApp context with form data, Floating contact bar target blank, Booking success with vehicle name, and Login page loading. Ensure port 3000 is used.",
+    "serverMode": "development",
     "envs": {
       "API_KEY": "sk-user-K8YX4s6Nvth5WJnggQBLR5NzkdDYKkGiF6xcF6zXl4GbqpJ0Sad_1D9nObma7XxYj-28H5qnmBYxKr9JuJc82RfwKHwzskkUnqDu4JjS1hGrHLhq4lsWjzi3he2jmYCa_q4"
     }
   },
-  "serverPort": 56992,
-  "proxy": "http://52ab74bf-d53b-4b8f-84fa-afb9d919802c:7tzArTXmuxZlAg2V49HUvoFqvbGXL7IB@tun.testsprite.com:8080"
+  "serverPort": 59701,
+  "proxy": "http://6bf02f05-9dde-4a2c-96bc-00e3cd1468c9:ilHAdLgIgeT7LAJouFJmp2PoI84IMTNc@tun.testsprite.com:8080"
 }

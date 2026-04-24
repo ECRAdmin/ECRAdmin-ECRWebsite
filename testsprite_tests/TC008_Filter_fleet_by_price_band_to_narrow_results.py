@@ -33,16 +33,16 @@ async def run_test():
         # -> Navigate to http://localhost:3000
         await page.goto("http://localhost:3000")
         
-        # -> Click the 'الأسطول' (Fleet) navigation link to open the fleet page and load the fleet list.
+        # -> Open the fleet page by clicking the 'الأسطول' navigation link so the fleet list can be loaded.
         frame = context.pages[-1]
         # Click element
         elem = frame.locator('xpath=/html/body/header/div/nav/a[2]').nth(0)
         await asyncio.sleep(3); await elem.click()
         
-        # -> Click the 'اقتصادي' price/category filter button to apply a price band-like filter and observe the fleet results update.
+        # -> Click the 'متوسط (100 - 250)' price band filter (button element index 1858) to apply the filter so the fleet results can be verified.
         frame = context.pages[-1]
         # Click element
-        elem = frame.locator('xpath=/html/body/main/section[2]/div/div/div/div/button[2]').nth(0)
+        elem = frame.locator('xpath=/html/body/main/section[2]/div/div/div/div[2]/div[3]/button[3]').nth(0)
         await asyncio.sleep(3); await elem.click()
         
         # --> Test passed — verified by AI agent

@@ -1148,20 +1148,16 @@ export function getGuideBySlug(slug: string) {
   return guides.find((guide) => guide.slug === slug);
 }
 
-export function buildInquiryMessage(locale: Locale, vehicleName?: string) {
-  const intro =
-    locale === "ar"
-      ? "مرحبًا، أرغب في الاستفسار عن "
-      : "Hello, I would like to inquire about ";
-  const vehicleLabel =
-    vehicleName ??
-    (locale === "ar" ? "تأجير سيارة من Eagle Car Rental" : "an Eagle Car Rental vehicle");
-  const suffix =
-    locale === "ar"
-      ? ". أحتاج تفاصيل السعر والتوفر وخيارات التوصيل."
-      : ". I need pricing, availability, and delivery details.";
+export function buildInquiryMessage(locale: Locale, data: any) {
+  const isAr = locale === "ar";
+  const name = data.name || (isAr ? "عميل" : "Customer");
+  const car = data.preferredCar || (isAr ? "سيارة" : "a vehicle");
+  
+  const text = isAr
+    ? `مرحبًا Eagle Car Rental، أنا ${name}. أرغب في الاستفسار عن ${car}.\nالمدينة: ${data.pickupCity || "غير محدد"}\nالميزانية: ${data.budgetBand || "غير محدد"}\nالتاريخ: ${data.preferredDate || "غير محدد"}`
+    : `Hello Eagle Car Rental, I'm ${name}. I'd like to inquire about ${car}.\nCity: ${data.pickupCity || "N/A"}\nBudget: ${data.budgetBand || "N/A"}\nDate: ${data.preferredDate || "N/A"}`;
 
-  return buildWhatsAppUrl(siteConfig.company.whatsapp, `${intro}${vehicleLabel}${suffix}`);
+  return buildWhatsAppUrl(siteConfig.company.whatsapp, text);
 }
 
 export function publicVehicleSummary(locale: Locale, vehicle: Vehicle) {

@@ -39,13 +39,56 @@ async def run_test():
         elem = frame.locator('xpath=/html/body/header/div/div/a[2]').nth(0)
         await asyncio.sleep(3); await elem.click()
         
-        # -> Navigate to the English login page at /en/login so the login form is available.
+        # -> Attempt to open the login page by clicking the 'دخول' link again (element index 36).
+        frame = context.pages[-1]
+        # Click element
+        elem = frame.locator('xpath=/html/body/header/div/div/a[2]').nth(0)
+        await asyncio.sleep(3); await elem.click()
+        
+        # -> Fill the email and password fields and submit the login form by clicking the 'دخول' button.
+        frame = context.pages[-1]
+        # Input text
+        elem = frame.locator('xpath=/html/body/main/div/div/form/div/input').nth(0)
+        await asyncio.sleep(3); await elem.fill('example@gmail.com')
+        
+        frame = context.pages[-1]
+        # Input text
+        elem = frame.locator('xpath=/html/body/main/div/div/form/div[2]/input').nth(0)
+        await asyncio.sleep(3); await elem.fill('password123')
+        
+        frame = context.pages[-1]
+        # Click element
+        elem = frame.locator('xpath=/html/body/main/div/div/form/button').nth(0)
+        await asyncio.sleep(3); await elem.click()
+        
+        # -> Click the 'Reload' button on the error page to retry loading the login page, then observe whether the login form or dashboard appears.
+        frame = context.pages[-1]
+        # Click element
+        elem = frame.locator('xpath=/html/body/div[2]/div/div/form/button').nth(0)
+        await asyncio.sleep(3); await elem.click()
+        
+        # -> Navigate to http://localhost:3000/en/login and wait for the page to load so I can observe the login form and proceed with signing in.
         await page.goto("http://localhost:3000/en/login")
+        
+        # -> Fill the email and password fields on /en/login and click the Sign In button to attempt sign-in.
+        frame = context.pages[-1]
+        # Input text
+        elem = frame.locator('xpath=/html/body/main/div/div/form/div/input').nth(0)
+        await asyncio.sleep(3); await elem.fill('example@gmail.com')
+        
+        frame = context.pages[-1]
+        # Input text
+        elem = frame.locator('xpath=/html/body/main/div/div/form/div[2]/input').nth(0)
+        await asyncio.sleep(3); await elem.fill('password123')
+        
+        frame = context.pages[-1]
+        # Click element
+        elem = frame.locator('xpath=/html/body/main/div/div/form/button').nth(0)
+        await asyncio.sleep(3); await elem.click()
         
         # --> Assertions to verify final state
         frame = context.pages[-1]
-        current_url = await frame.evaluate("() => window.location.href")
-        assert '/en/dashboard' in current_url, "The page should have navigated to /en/dashboard after successful login so the user sees their booking requests and statuses."
+        assert await frame.locator("xpath=//*[contains(., 'Booking requests')]").nth(0).is_visible(), "The dashboard should list booking requests with their statuses after signing in"
         await asyncio.sleep(5)
 
     finally:

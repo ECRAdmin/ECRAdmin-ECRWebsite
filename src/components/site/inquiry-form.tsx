@@ -24,6 +24,7 @@ const labels = {
     sending: "جارٍ الإرسال...",
     success: "تم إرسال الطلب بنجاح. يمكنك المتابعة عبر واتساب مباشرة.",
     name: "الاسم",
+    email: "البريد الإلكتروني",
     mobile: "رقم الجوال",
     whatsapp: "رقم واتساب",
     residencyType: "نوع العميل",
@@ -51,6 +52,7 @@ const labels = {
     sending: "Sending...",
     success: "Inquiry sent successfully. You can continue directly on WhatsApp.",
     name: "Name",
+    email: "Email",
     mobile: "Mobile",
     whatsapp: "WhatsApp number",
     residencyType: "Customer type",
@@ -84,7 +86,7 @@ export function InquiryForm({
   const [isPending, startTransition] = useTransition();
 
   const defaultWhatsappUrl = useMemo(
-    () => buildInquiryMessage(locale, defaultVehicle),
+    () => buildInquiryMessage(locale, { preferredCar: defaultVehicle }),
     [defaultVehicle, locale],
   );
 
@@ -146,6 +148,7 @@ export function InquiryForm({
 
       <div className={compact ? "grid gap-4" : "grid gap-4 sm:grid-cols-2"}>
         <Field label={t.name} name="name" required />
+        <Field label={t.email} name="email" type="email" required />
         <Field label={t.mobile} name="mobile" required />
         <Field label={t.whatsapp} name="whatsapp" required />
         <SelectField
@@ -189,7 +192,13 @@ export function InquiryForm({
           placeholder={t.budgetPlaceholder}
           required
         />
-        <Field label={t.preferredDate} name="preferredDate" type="date" required />
+        <Field
+          label={t.preferredDate}
+          name="preferredDate"
+          type="date"
+          defaultValue={new Date().toISOString().split("T")[0]}
+          required
+        />
         <div className={compact ? "" : "sm:col-span-2"}>
           <label htmlFor="notes" className="mb-2 block text-sm text-[var(--text-muted)]">
             {t.notes}
@@ -242,17 +251,39 @@ export function InquiryForm({
       </div>
 
       {state.message ? (
-        <div className="mt-5 rounded-2xl border border-white/10 bg-white/[0.03] p-4 text-sm text-[var(--text-muted)]">
-          <p>{state.message}</p>
+        <div className="mt-5 rounded-2xl border border-white/10 bg-white/[0.03] p-6 text-center">
+          <div className="mb-4 flex justify-center">
+            <div className={`rounded-full p-2 ${state.success ? 'bg-green-500/10 text-green-500' : 'bg-red-500/10 text-red-500'}`}>
+              {state.success ? (
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              ) : (
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              )}
+            </div>
+          </div>
+          <p className="text-white font-medium mb-4">{state.message}</p>
           {state.success && state.whatsappUrl ? (
             <a
               href={state.whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={() => event({ action: "click_whatsapp_after_success", category: "conversion", label: "form_success" })}
-              className="mt-3 inline-flex rounded-full bg-white px-4 py-2 font-semibold text-black"
+              className="inline-flex rounded-full bg-[var(--accent)] px-6 py-2 text-sm font-semibold text-black transition hover:bg-[var(--accent-bright)]"
             >
               {t.continueWhatsapp}
             </a>
-          ) : null}
+          ) : (
+            <button 
+              onClick={() => setState({})}
+              className="text-sm text-[var(--accent)] hover:underline"
+            >
+              {locale === 'ar' ? 'حاول مرة أخرى' : 'Try again'}
+            </button>
+          )}
         </div>
       ) : null}
     </form>
@@ -265,12 +296,14 @@ function Field({
   type = "text",
   placeholder,
   required = false,
+  defaultValue,
 }: {
   label: string;
   name: string;
   type?: string;
   placeholder?: string;
   required?: boolean;
+  defaultValue?: string;
 }) {
   return (
     <div className="block">
@@ -284,6 +317,7 @@ function Field({
         placeholder={placeholder}
         required={required}
         aria-required={required}
+        defaultValue={defaultValue}
         className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white placeholder:text-[var(--text-subtle)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
       />
     </div>

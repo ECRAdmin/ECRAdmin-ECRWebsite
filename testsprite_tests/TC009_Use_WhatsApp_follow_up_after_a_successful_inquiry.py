@@ -33,70 +33,59 @@ async def run_test():
         # -> Navigate to http://localhost:3000
         await page.goto("http://localhost:3000")
         
-        # -> Open the Contact page (تواصل), fill and submit the inquiry form, then click the WhatsApp CTA to verify the deep link includes the prefilled message from the form.
+        # -> Open the contact page by clicking the 'تواصل' (Contact) link in the nav.
         frame = context.pages[-1]
         # Click element
         elem = frame.locator('xpath=/html/body/header/div/nav/a[7]').nth(0)
         await asyncio.sleep(3); await elem.click()
         
+        # -> Fill the remaining form fields (WhatsApp number, pickup city, budget band, preferred date, notes), toggle the consent checkbox, and submit the inquiry form.
         frame = context.pages[-1]
         # Input text
-        elem = frame.locator('xpath=/html/body/main/section[1]/div[3]/div/div/div[2]/div[2]/form/div[2]/div[1]/input').nth(0)
-        await asyncio.sleep(3); await elem.fill('Test User')
-        
-        # -> Fill the remaining required fields in the inquiry form, check consent, submit the form, then click the WhatsApp CTA and verify the resulting WhatsApp deep link contains the prefilled message from the form.
-        frame = context.pages[-1]
-        # Input text
-        elem = frame.locator('xpath=/html/body/main/section[2]/div/form/div[2]/div/input').nth(0)
-        await asyncio.sleep(3); await elem.fill('Test User')
+        elem = frame.locator('xpath=/html/body/main/section[2]/div/form/div[2]/div[4]/input').nth(0)
+        await asyncio.sleep(3); await elem.fill('05551234567')
         
         frame = context.pages[-1]
         # Input text
-        elem = frame.locator('xpath=/html/body/main/section[2]/div/form/div[2]/div[2]/input').nth(0)
-        await asyncio.sleep(3); await elem.fill('0501234567')
-        
-        frame = context.pages[-1]
-        # Input text
-        elem = frame.locator('xpath=/html/body/main/section[2]/div/form/div[2]/div[3]/input').nth(0)
-        await asyncio.sleep(3); await elem.fill('0501234567')
-        
-        # -> Fill remaining visible required fields (city, budget, preferred date), check consent, submit the inquiry form, then click the WhatsApp CTA and verify the opened WhatsApp deep link contains the prefilled message from the contact form.
-        frame = context.pages[-1]
-        # Input text
-        elem = frame.locator('xpath=/html/body/main/section[2]/div/form/div[2]/div[5]/input').nth(0)
+        elem = frame.locator('xpath=/html/body/main/section[2]/div/form/div[2]/div[6]/input').nth(0)
         await asyncio.sleep(3); await elem.fill('دبي')
         
         frame = context.pages[-1]
         # Input text
-        elem = frame.locator('xpath=/html/body/main/section[2]/div/form/div[2]/div[8]/input').nth(0)
-        await asyncio.sleep(3); await elem.fill('50 - 100 درهم')
+        elem = frame.locator('xpath=/html/body/main/section[2]/div/form/div[2]/div[9]/input').nth(0)
+        await asyncio.sleep(3); await elem.fill('50 - 100')
+        
+        # -> Fill the preferred date and notes fields, toggle the consent checkbox, and submit the inquiry form.
+        frame = context.pages[-1]
+        # Input text
+        elem = frame.locator('xpath=/html/body/main/section[2]/div/form/div[2]/div[10]/input').nth(0)
+        await asyncio.sleep(3); await elem.fill('2026-05-01')
         
         frame = context.pages[-1]
         # Input text
-        elem = frame.locator('xpath=/html/body/main/section[2]/div/form/div[2]/div[9]/input').nth(0)
-        await asyncio.sleep(3); await elem.fill('2026-05-01')
+        elem = frame.locator('xpath=/html/body/main/section[2]/div/form/div[2]/div[11]/textarea').nth(0)
+        await asyncio.sleep(3); await elem.fill('اختبار: أحتاج السيارة لمدة 3 أيام. شكراً.')
         
-        # -> Check the consent checkbox, submit the inquiry form, then click the WhatsApp CTA to open the WhatsApp deep link (verify the prefilled message).
         frame = context.pages[-1]
         # Click element
         elem = frame.locator('xpath=/html/body/main/section[2]/div/form/label/input').nth(0)
         await asyncio.sleep(3); await elem.click()
         
+        # -> Click the form submit button (إرسال الطلب) to submit the inquiry. After submission the next step will be to click the WhatsApp CTA and verify the opened deep link contains the prefilled message from the contact form.
         frame = context.pages[-1]
         # Click element
         elem = frame.locator('xpath=/html/body/main/section[2]/div/form/div[3]/button').nth(0)
         await asyncio.sleep(3); await elem.click()
         
-        # -> Click the follow-up WhatsApp link ('المتابعة عبر واتساب') to open the WhatsApp deep link and verify the URL contains the prefilled message built from the submitted form fields (e.g., includes name or other form context).
+        # -> Click the WhatsApp CTA on the contact page to open the WhatsApp deep link and verify the opened URL or new tab includes the prefilled message with contact context (name, city, notes).
         frame = context.pages[-1]
         # Click element
-        elem = frame.locator('xpath=/html/body/main/section[2]/div/form/div[4]/a').nth(0)
+        elem = frame.locator('xpath=/html/body/main/section[2]/div/form/div[3]/a').nth(0)
         await asyncio.sleep(3); await elem.click()
         
-        # --> Test passed — verified by AI agent
+        # --> Assertions to verify final state
         frame = context.pages[-1]
-        current_url = await frame.evaluate("() => window.location.href")
-        assert current_url is not None, "Test completed successfully"
+        assert await frame.locator("xpath=//*[contains(., 'اختبار: أحتاج السيارة لمدة 3 أيام. شكراً.')]").nth(0).is_visible(), "The WhatsApp message should include the inquiry notes from the contact form after submitting and clicking the WhatsApp CTA"
         await asyncio.sleep(5)
 
     finally:

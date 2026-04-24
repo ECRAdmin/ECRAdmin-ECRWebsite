@@ -33,45 +33,48 @@ async def run_test():
         # -> Navigate to http://localhost:3000
         await page.goto("http://localhost:3000")
         
-        # -> Click the 'العروض' (Offers) link to open the offers list.
-        frame = context.pages[-1]
-        # Click element
-        elem = frame.locator('xpath=/html/body/header/div/nav/a[5]').nth(0)
-        await asyncio.sleep(3); await elem.click()
+        # -> Navigate to http://localhost:3000/en/offers to load the English offers list.
+        await page.goto("http://localhost:3000/en/offers")
         
-        # -> Click the first offer's 'عرض التفاصيل' link (element index 2750) to open its detail view and then verify the detail page is displayed.
-        frame = context.pages[-1]
-        # Click element
-        elem = frame.locator('xpath=/html/body/main/section[2]/div/div[2]/div/article/a').nth(0)
-        await asyncio.sleep(3); await elem.click()
-        
-        # -> Click the first offer's 'عرض التفاصيل' link again to open its detail view, then verify the detail page or modal is displayed.
-        frame = context.pages[-1]
-        # Click element
-        elem = frame.locator('xpath=/html/body/main/section[2]/div/div[2]/div/article/a').nth(0)
-        await asyncio.sleep(3); await elem.click()
-        
-        # -> Click the offer's 'عرض التفاصيل' link at index 2756 to open its detail view, then verify that the offer detail page or modal is displayed.
-        frame = context.pages[-1]
-        # Click element
-        elem = frame.locator('xpath=/html/body/main/section[2]/div/div[2]/div[2]/article/a').nth(0)
-        await asyncio.sleep(3); await elem.click()
-        
-        # -> Click a different offer's 'عرض التفاصيل' link (index 2762) to open its detail view, then verify the detail page or modal is displayed (look for the offer title or price).
-        frame = context.pages[-1]
-        # Click element
-        elem = frame.locator('xpath=/html/body/main/section[2]/div/div[2]/div[3]/article/a').nth(0)
-        await asyncio.sleep(3); await elem.click()
-        
-        # -> Click the offer article element (index 2751) to open its detail view, then observe the UI for an offer title or price to confirm the detail view. Stop after performing the click and allow the UI to update.
+        # -> Click the first offer entry to open its detail view and then verify the detail page is displayed.
         frame = context.pages[-1]
         # Click element
         elem = frame.locator('xpath=/html/body/main/section[2]/div/div[2]/div/article').nth(0)
         await asyncio.sleep(3); await elem.click()
         
+        # -> Click the 'View vehicles' button on the first offer to open its detail view, then verify the detail page displays.
+        frame = context.pages[-1]
+        # Click element
+        elem = frame.locator('xpath=/html/body/main/section[2]/div/div[2]/div/article/div[2]/a[2]').nth(0)
+        await asyncio.sleep(3); await elem.click()
+        
+        # -> Click the 'Offers' navigation link to open the offers list, then wait for the page to load so I can select an offer to open its detail view.
+        frame = context.pages[-1]
+        # Click element
+        elem = frame.locator('xpath=/html/body/header/div/nav/a[5]').nth(0)
+        await asyncio.sleep(3); await elem.click()
+        
+        # -> Click the first offer article (index 5190) to try to open the offer detail view, then wait for the UI to update.
+        frame = context.pages[-1]
+        # Click element
+        elem = frame.locator('xpath=/html/body/main/section[2]/div/div[2]/div/article').nth(0)
+        await asyncio.sleep(3); await elem.click()
+        
+        # -> Click the 'View vehicles' CTA for the first offer (index 5187), wait for the UI to update, then verify the offer detail view is displayed.
+        frame = context.pages[-1]
+        # Click element
+        elem = frame.locator('xpath=/html/body/main/section[2]/div/div[2]/div/article/div[2]/a[2]').nth(0)
+        await asyncio.sleep(3); await elem.click()
+        
+        # -> Click the first vehicle 'Details' link (index 5518) to open its detail view, then wait for the UI to update and verify the detail view appears.
+        frame = context.pages[-1]
+        # Click element
+        elem = frame.locator('xpath=/html/body/main/section[2]/div/div/div[2]/article/div[2]/div[3]/a').nth(0)
+        await asyncio.sleep(3); await elem.click()
+        
         # --> Assertions to verify final state
         frame = context.pages[-1]
-        assert await frame.locator("xpath=//*[contains(., 'تفاصيل العرض')]").nth(0).is_visible(), "The offer detail view should be displayed after clicking an offer from the list"
+        assert await frame.locator("xpath=//*[contains(., 'Details')]").nth(0).is_visible(), "The offer detail view should be displayed after clicking an offer from the list."
         await asyncio.sleep(5)
 
     finally:

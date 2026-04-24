@@ -5,6 +5,7 @@ import { z } from "zod";
 export const inquirySchema = z.object({
   locale: z.enum(["ar", "en"]),
   name: z.string().min(2).max(120),
+  email: z.string().email(),
   mobile: z.string().min(6).max(30),
   whatsapp: z.string().min(6).max(30),
   residencyType: z.enum(["resident", "tourist"]),

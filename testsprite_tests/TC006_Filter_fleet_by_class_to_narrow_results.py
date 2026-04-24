@@ -33,16 +33,19 @@ async def run_test():
         # -> Navigate to http://localhost:3000
         await page.goto("http://localhost:3000")
         
-        # -> Click the 'الأسطول' (Fleet) link in the header to open the fleet page (element index 21), then wait for the fleet list to finish loading.
+        # -> Click the 'الأسطول' (Fleet) navigation link to open the fleet page and then wait for the fleet list to load.
         frame = context.pages[-1]
         # Click element
         elem = frame.locator('xpath=/html/body/header/div/nav/a[2]').nth(0)
         await asyncio.sleep(3); await elem.click()
         
-        # -> Click the 'سيدان' class filter button (index 1240), wait for the results to update, then extract the visible article titles and any class/category labels to verify filtering.
+        # -> Navigate directly to /ar/fleet and wait for the fleet list to finish loading, so the vehicle class filter can be applied.
+        await page.goto("http://localhost:3000/ar/fleet")
+        
+        # -> Click the 'اقتصادي' (Economy) vehicle class filter (button index 2920) and wait for the fleet results to update.
         frame = context.pages[-1]
         # Click element
-        elem = frame.locator('xpath=/html/body/main/section[2]/div/div/div/div/button[3]').nth(0)
+        elem = frame.locator('xpath=/html/body/main/section[2]/div/div/div/div[2]/div/button[2]').nth(0)
         await asyncio.sleep(3); await elem.click()
         
         # --> Test passed — verified by AI agent

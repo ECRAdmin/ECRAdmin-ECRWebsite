@@ -33,16 +33,22 @@ async def run_test():
         # -> Navigate to http://localhost:3000
         await page.goto("http://localhost:3000")
         
-        # -> Scroll to the bottom of the page to confirm the WhatsApp CTA persists, then click the persistent WhatsApp CTA (element index 129) to open the WhatsApp deep link and verify it contains page context.
-        frame = context.pages[-1]
-        # Click element
-        elem = frame.locator('xpath=/html/body/main/section/div[3]/div/div/div/div[3]/a[2]').nth(0)
-        await asyncio.sleep(3); await elem.click()
-        
-        # -> Navigate to the Arabic FAQ page (/ar/faq) so I can scroll, click the persistent WhatsApp CTA there, and verify the deep link contains FAQ page context.
+        # -> Navigate to http://localhost:3000/ar/faq, scroll to bottom, click the persistent WhatsApp CTA, and verify the opened link contains a WhatsApp deep link with FAQ page context.
         await page.goto("http://localhost:3000/ar/faq")
         
-        # -> Click the persistent WhatsApp CTA (footer WhatsApp link index 222) to open the WhatsApp deep link and verify it contains FAQ page context.
+        # -> Click the persistent WhatsApp CTA (floating 'اتصل الآن') and verify the opened/redirected link is a WhatsApp deep link that includes a prefilled message referencing the FAQ page.
+        frame = context.pages[-1]
+        # Click element
+        elem = frame.locator('xpath=/html/body/header/div/div/a[3]').nth(0)
+        await asyncio.sleep(3); await elem.click()
+        
+        # -> Click the persistent floating WhatsApp CTA (index 1379) again, wait for the UI/navigation to respond, and verify whether a WhatsApp deep link is opened (either via navigation or a new tab) that includes a prefilled message referencing the FAQ page.
+        frame = context.pages[-1]
+        # Click element
+        elem = frame.locator('xpath=/html/body/header/div/div/a[3]').nth(0)
+        await asyncio.sleep(3); await elem.click()
+        
+        # -> Click the footer 'WhatsApp' link (index 1504) to see if it opens a WhatsApp deep link that includes FAQ page context (a wa.me or api.whatsapp link with a prefilled message referencing the FAQ/الأسئلة الشائعة).
         frame = context.pages[-1]
         # Click element
         elem = frame.locator('xpath=/html/body/footer/div/div[3]/div/a[3]').nth(0)
@@ -51,7 +57,7 @@ async def run_test():
         # --> Assertions to verify final state
         frame = context.pages[-1]
         current_url = await frame.evaluate("() => window.location.href")
-        assert "api.whatsapp.com/send" in current_url, "The page should have navigated to a WhatsApp deep link containing the FAQ page context after clicking the persistent WhatsApp CTA"
+        assert 'api.whatsapp.com' in current_url and '/ar/faq' in current_url, "The WhatsApp deep link should open with a prefilled message that includes the FAQ page context after clicking the persistent WhatsApp CTA"
         await asyncio.sleep(5)
 
     finally:

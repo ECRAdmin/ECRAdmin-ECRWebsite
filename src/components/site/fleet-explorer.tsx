@@ -17,16 +17,23 @@ export function FleetExplorer({
 }) {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("all");
+  const [priceBand, setPriceBand] = useState("all");
   const deferredQuery = useDeferredValue(query);
 
   const filteredVehicles = useMemo(() => {
     return vehicles.filter((vehicle) => {
       const matchesCategory = category === "all" || vehicle.category === category;
+      
+      let matchesPrice = true;
+      if (priceBand === "budget") matchesPrice = vehicle.dailyFrom < 100;
+      else if (priceBand === "mid") matchesPrice = vehicle.dailyFrom >= 100 && vehicle.dailyFrom < 250;
+      else if (priceBand === "premium") matchesPrice = vehicle.dailyFrom >= 250;
+
       const label = `${vehicle.name.ar} ${vehicle.name.en}`.toLowerCase();
       const matchesQuery = label.includes(deferredQuery.trim().toLowerCase());
-      return matchesCategory && matchesQuery;
+      return matchesCategory && matchesPrice && matchesQuery;
     });
-  }, [category, deferredQuery, vehicles]);
+  }, [category, priceBand, deferredQuery, vehicles]);
 
   const categories = [
     { value: "all", label: locale === "ar" ? "الكل" : "All" },
@@ -37,32 +44,60 @@ export function FleetExplorer({
     { value: "executive", label: locale === "ar" ? "تنفيذي" : "Executive" },
   ];
 
+  const priceBands = [
+    { value: "all", label: locale === "ar" ? "كل الأسعار" : "All Prices" },
+    { value: "budget", label: locale === "ar" ? "اقتصادي (< 100)" : "Budget (< 100)" },
+    { value: "mid", label: locale === "ar" ? "متوسط (100 - 250)" : "Mid-range (100 - 250)" },
+    { value: "premium", label: locale === "ar" ? "فاخر (> 250)" : "Premium (> 250)" },
+  ];
+
   return (
     <div className="space-y-8">
-      <div className="gold-ring glass-panel grid gap-4 rounded-[2rem] p-5 sm:grid-cols-[1fr_auto] sm:items-center">
-        <input
-          value={query}
-          onChange={(event) => setQuery(event.target.value)}
-          placeholder={
-            locale === "ar" ? "ابحث بالاسم أو الفئة..." : "Search by model or category..."
-          }
-          className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white placeholder:text-[var(--text-subtle)]"
-        />
-        <div className="flex flex-wrap gap-2">
-          {categories.map((item) => (
-            <button
-              key={item.value}
-              type="button"
-              onClick={() => setCategory(item.value)}
-              className={`rounded-full px-4 py-2 text-sm font-medium transition ${
-                category === item.value
-                  ? "bg-[var(--accent)] text-black"
-                  : "border border-white/10 text-[var(--text-muted)]"
-              }`}
-            >
-              {item.label}
-            </button>
-          ))}
+      <div className="gold-ring glass-panel flex flex-col gap-5 rounded-[2rem] p-5 lg:flex-row lg:items-center">
+        <div className="flex-1">
+          <input
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder={
+              locale === "ar" ? "ابحث بالاسم أو الفئة..." : "Search by model or category..."
+            }
+            className="w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white placeholder:text-[var(--text-subtle)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+          />
+        </div>
+        <div className="flex flex-wrap items-center gap-4">
+          <div className="flex flex-wrap gap-2">
+            {categories.map((item) => (
+              <button
+                key={item.value}
+                type="button"
+                onClick={() => setCategory(item.value)}
+                className={`rounded-full px-4 py-2 text-xs font-medium transition ${
+                  category === item.value
+                    ? "bg-[var(--accent)] text-black"
+                    : "border border-white/10 text-[var(--text-muted)] hover:border-white/20"
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+          <div className="h-6 w-px bg-white/10 hidden lg:block" />
+          <div className="flex flex-wrap gap-2">
+            {priceBands.map((item) => (
+              <button
+                key={item.value}
+                type="button"
+                onClick={() => setPriceBand(item.value)}
+                className={`rounded-full px-4 py-2 text-xs font-medium transition ${
+                  priceBand === item.value
+                    ? "bg-[var(--accent-bright)] text-black"
+                    : "border border-white/10 text-[var(--text-muted)] hover:border-white/20"
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 

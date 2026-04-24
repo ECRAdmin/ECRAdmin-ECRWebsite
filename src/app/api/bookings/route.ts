@@ -15,13 +15,6 @@ const bookingSchema = z.object({
 
 export async function POST(request: Request) {
   try {
-    if (!writeClient) {
-      return NextResponse.json(
-        { error: "Sanity write client not configured." },
-        { status: 500 },
-      );
-    }
-
     const body = await request.json();
     const result = bookingSchema.safeParse(body);
 
@@ -34,6 +27,14 @@ export async function POST(request: Request) {
 
     const { vehicleId, ...bookingData } = result.data;
 
+    if (!writeClient) {
+      return NextResponse.json(
+        { error: "Sanity write client not configured" },
+        { status: 500 },
+      );
+    }
+
+    let bookingId;
     // 1. Check vehicle availability
     const vehicle = await writeClient.fetch(
       `*[_type == "vehicle" && _id == $id][0]`,
@@ -63,17 +64,18 @@ export async function POST(request: Request) {
       paymentStatus: "unpaid",
       totalAmount: bookingData.totalAmount,
     });
+    bookingId = booking._id;
 
     // 3. Store locally and trigger webhook (CRM sync)
     await storeBookingLocally({
       ...bookingData,
-      bookingId: booking._id,
+      bookingId,
       vehicleId,
     });
     
     return NextResponse.json({
       ok: true,
-      bookingId: booking._id,
+      bookingId,
       message: "Booking initiated successfully.",
     });
   } catch (error) {

@@ -33,19 +33,25 @@ async def run_test():
         # -> Navigate to http://localhost:3000
         await page.goto("http://localhost:3000")
         
-        # -> Click the 'الأسطول' (Fleet) link to open the fleet page.
+        # -> Click the 'الأسطول' (Fleet) link to open the fleet list page.
         frame = context.pages[-1]
         # Click element
         elem = frame.locator('xpath=/html/body/header/div/nav/a[2]').nth(0)
         await asyncio.sleep(3); await elem.click()
         
-        # -> Click a vehicle card's 'التفاصيل' link to open its detail page (start with the first vehicle).
+        # -> Open the fleet list by clicking the 'الأسطول' link and wait for the fleet page to finish loading.
+        frame = context.pages[-1]
+        # Click element
+        elem = frame.locator('xpath=/html/body/header/div/nav/a[2]').nth(0)
+        await asyncio.sleep(3); await elem.click()
+        
+        # -> Open a vehicle detail page by clicking a vehicle's 'التفاصيل' link (first vehicle). Then wait for the vehicle detail page to load.
         frame = context.pages[-1]
         # Click element
         elem = frame.locator('xpath=/html/body/main/section[2]/div/div/div[2]/article/div[2]/div[3]/a').nth(0)
         await asyncio.sleep(3); await elem.click()
         
-        # -> Fill the booking form on the vehicle detail page (name, email, phone, pickup date, dropoff date) and submit the form by clicking 'تأكيد الحجز والدفع' to initiate the booking request.
+        # -> Fill the booking form on the vehicle detail page (name, email, phone, start and end dates) then submit the booking request.
         frame = context.pages[-1]
         # Input text
         elem = frame.locator('xpath=/html/body/main/section[2]/div/form/div/label/input').nth(0)
@@ -54,14 +60,14 @@ async def run_test():
         frame = context.pages[-1]
         # Input text
         elem = frame.locator('xpath=/html/body/main/section[2]/div/form/div/label[2]/input').nth(0)
-        await asyncio.sleep(3); await elem.fill('test@example.com')
+        await asyncio.sleep(3); await elem.fill('example@gmail.com')
         
         frame = context.pages[-1]
         # Input text
         elem = frame.locator('xpath=/html/body/main/section[2]/div/form/div/label[3]/input').nth(0)
-        await asyncio.sleep(3); await elem.fill('0501234567')
+        await asyncio.sleep(3); await elem.fill('0557021991')
         
-        # -> Fill the pickup date (startDate) with a valid YYYY-MM-DD date, then fill the dropoff date (endDate), then submit the booking by clicking 'تأكيد الحجز والدفع'.
+        # -> Fill a valid pickup date into the pickup date field (index 5924).
         frame = context.pages[-1]
         # Input text
         elem = frame.locator('xpath=/html/body/main/section[2]/div/form/div/div/label/input').nth(0)
@@ -79,8 +85,7 @@ async def run_test():
         
         # --> Assertions to verify final state
         frame = context.pages[-1]
-        assert await frame.locator("xpath=//*[contains(., 'تم إرسال طلب الحجز')]").nth(0).is_visible(), "The booking confirmation should be displayed after submitting the booking request.",
-        assert await frame.locator("xpath=//*[contains(., 'المركبة')]").nth(0).is_visible(), "The confirmation should indicate which vehicle the booking request is for."]}
+        assert await frame.locator("xpath=//*[contains(., 'تم إرسال طلب الحجز')]").nth(0).is_visible(), "The booking confirmation should be displayed after submitting the booking request","assert await frame.locator("xpath=//*[contains(., 'Toyota Corolla')]").nth(0).is_visible(), "The confirmation should indicate the request is for the selected vehicle"
         await asyncio.sleep(5)
 
     finally:

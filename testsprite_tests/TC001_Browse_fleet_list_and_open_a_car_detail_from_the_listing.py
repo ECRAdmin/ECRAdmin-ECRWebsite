@@ -39,7 +39,7 @@ async def run_test():
         elem = frame.locator('xpath=/html/body/header/div/nav/a[2]').nth(0)
         await asyncio.sleep(3); await elem.click()
         
-        # -> Click a vehicle card's 'التفاصيل' link (index 3103) to open its detail page, then wait for the detail page to load.
+        # -> Click the 'التفاصيل' link for the first vehicle card (element index 3119) to open its detail page, then verify the vehicle detail page loads.
         frame = context.pages[-1]
         # Click element
         elem = frame.locator('xpath=/html/body/main/section[2]/div/div/div[2]/article/div[2]/div[3]/a').nth(0)
